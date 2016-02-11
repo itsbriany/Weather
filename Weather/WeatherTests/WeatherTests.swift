@@ -11,19 +11,16 @@ import XCTest
 
 class WeatherTests: XCTestCase {
     
+    var controller: MainViewController!
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        self.controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-    }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
     }
     
     func testPerformanceExample() {
@@ -33,4 +30,8 @@ class WeatherTests: XCTestCase {
         }
     }
     
+    func testGetRSSFeed() {
+        let url = NSURL(string: "http://weather.gc.ca/rss/city/on-76_e.xml")
+        XCTAssert(self.controller.getRSSFeed(url!))
+    }
 }
