@@ -23,13 +23,6 @@ class MainViewControllerTests: XCTestCase {
         super.tearDown()
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
     func testGetRSSFeed() {
         // Given we have a RSS feed URL and have loaded the controller's main view
         let _ = controller.view

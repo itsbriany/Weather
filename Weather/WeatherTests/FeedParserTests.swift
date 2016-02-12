@@ -23,13 +23,6 @@ class FeedParserTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
     
     func testParseRSSFeedDefaultConstructor() {
         // Parse the default url provided in setUp
@@ -40,10 +33,8 @@ class FeedParserTests: XCTestCase {
         
         // The entries must hold user friendly data
         for entry in self.feedParser.entriesList {
-            XCTAssertNotNil(entry.title)
-            XCTAssertNotNil(entry.summary)
-            XCTAssertFalse(entry.title!.containsString("\n"))
-            XCTAssertFalse(entry.summary!.containsString("\n"))
+            XCTAssertGreaterThan(entry.title!.characters.count, 1)
+            XCTAssertGreaterThan(entry.summary!.characters.count, 1)
         }
     }
 

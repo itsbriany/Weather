@@ -10,6 +10,9 @@ import Foundation
 
 class ForecastAI {
 
+    // MARK: Properties
+    var date = NSDate()
+    
     func getWeatherConditionFromText(text: String) -> WeatherCondition {
         let lowerCaseText = text.lowercaseString
         if lowerCaseText.containsString("cloud") && lowerCaseText.containsString("sun") {
@@ -24,7 +27,7 @@ class ForecastAI {
             return WeatherCondition.Windy
         } else if lowerCaseText.containsString("lighting") {
             return WeatherCondition.Lightning
-        } else if lowerCaseText.containsString("cloud") {
+        } else if lowerCaseText.containsString("cloud") || lowerCaseText.containsString("fog") {
             return WeatherCondition.Cloudy
         } else if lowerCaseText.containsString("rain"){
             return WeatherCondition.Rainy
@@ -32,6 +35,17 @@ class ForecastAI {
             return WeatherCondition.Sunny
         }
         return WeatherCondition.Error
+    }
+    
+    func extractMostRecentWeatherEntryTitle(weatherEntryList: [WeatherEntryModel]) -> String {
+        for entry in weatherEntryList {
+            if let title = entry.title?.lowercaseString {
+                if (title.containsString("current condition")) {
+                    return title
+                }
+            }
+        }
+        return ""
     }
     
 }

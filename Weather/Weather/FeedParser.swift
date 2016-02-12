@@ -42,16 +42,19 @@ class FeedParser: NSObject, NSXMLParserDelegate {
     
     func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
         if elementName == "entry" {
-            self.entriesList.append(self.dummyWeatherEntry)
+            let weatherEntryCopy = self.dummyWeatherEntry.copy()
+            self.entriesList.append(weatherEntryCopy)
             self.foundEntry = false
+            self.dummyWeatherEntry.reset()
         }
     }
     
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        if !string.containsString("\n") {
-            if self.currentElement == "title" && self.foundEntry {
+        // if !string.containsString("\n") && self.foundEntry {
+        if self.foundEntry {
+            if self.currentElement == "title" && self.dummyWeatherEntry.title?.isEmpty == true {
                 self.dummyWeatherEntry.title = string
-            } else if self.currentElement == "summary" && self.foundEntry {
+            } else if self.currentElement == "summary" && self.dummyWeatherEntry.summary?.isEmpty == true {
                 self.dummyWeatherEntry.summary = string
             }
         }

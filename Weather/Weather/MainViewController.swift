@@ -52,11 +52,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.weatherEmojiLabel.text = extractWeatherConditionEmoji(cell, indexPath: indexPath)
     }
     
-    // MARK: HELPERS
+    // MARK: Helpers
     private func extractWeatherConditionEmoji(cell: WeatherEntryCell, indexPath: NSIndexPath) -> String {
         let text = self.parser.entriesList[indexPath.row].title
-        let weatherCondition = self.forecastAI.getWeatherConditionFromText(text!)
-        switch (weatherCondition) {
+        if text != nil {
+            let weatherCondition = self.forecastAI.getWeatherConditionFromText(text!)
+            switch (weatherCondition) {
             case WeatherCondition.Cloudy:
                 return "☁️"
             case WeatherCondition.Lightning:
@@ -77,7 +78,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 return "🌬"
             default:
                 return "X"
+            }
         }
+        return "X"
     }
 }
 

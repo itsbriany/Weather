@@ -8,9 +8,18 @@
 
 import Foundation
 
-public struct WeatherEntryModel {
+public class WeatherEntryModel: NSCopying {
+    
+    // MARK: Properties
     var summary: String?
     var title: String?
+    
+    
+    // MARK: Constructors
+    init(weatherEntryModel: WeatherEntryModel) {
+        self.summary = weatherEntryModel.summary
+        self.title = weatherEntryModel.title
+    }
     
     init(summary: String, title: String) {
         self.summary = summary
@@ -18,7 +27,25 @@ public struct WeatherEntryModel {
     }
     
     init() {
-        self.summary = nil
-        self.title = nil
+        self.summary = ""
+        self.title = ""
     }
+    
+    
+    // MARK: NSCopying implementation
+    @objc public func copyWithZone(zone: NSZone) -> AnyObject {
+        return WeatherEntryModel(weatherEntryModel: self)
+    }
+    
+    
+    // MARK: Interface
+    func reset() {
+        self.summary?.removeAll()
+        self.title?.removeAll()
+    }
+    
+    func copy() -> WeatherEntryModel {
+        return copyWithZone(nil) as! WeatherEntryModel
+    }
+    
 }

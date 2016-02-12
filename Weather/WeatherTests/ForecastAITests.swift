@@ -19,20 +19,13 @@ class ForecastAITests: XCTestCase {
     }
     
     override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
-    }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
     }
     
     func testDetermineForcastFromText() {
         // Given we have various weather feeds
         let cloudyText = "LOTS OF CLOUDS WITH VERY LITTLE RAIN"
+        let cloudyText2 = "foggy envrionments"
         let windyText = "WINDY FROM THE NORTH"
         let rainyText = "A VERY RAINY DAY"
         let tornadoText = "SUPER HIGH WINDS WITH FREQUENT TORNADOES"
@@ -45,6 +38,7 @@ class ForecastAITests: XCTestCase {
         
         // When we read the text, we should be able to determine the weather conditions
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(cloudyText), WeatherCondition.Cloudy)
+        XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(cloudyText2), WeatherCondition.Cloudy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(windyText), WeatherCondition.Windy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(rainyText), WeatherCondition.Rainy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(tornadoText), WeatherCondition.Tornado)
@@ -54,6 +48,21 @@ class ForecastAITests: XCTestCase {
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(sunnyCloudyText), WeatherCondition.SunnyCloudy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(sunnyText), WeatherCondition.Sunny)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(errorText), WeatherCondition.Error)
+    }
+    
+    func testExtractMostRecentWeatherEntryTitle() {
+        // Given we have a list of weather entry titles
+        let feedParser = FeedParser(url: NSURL(string: "http://weather.gc.ca/rss/city/ab-12_e.xml")!)
+        XCTAssert(feedParser.parseFeed())
+        
+        // When we look through them
+        let weatherEntriesList = feedParser.entriesList
+        
+        // We should be able to pick the one that is most relevant to our current time
+        // Should contain current conditions
+        let mostRecentTitle = self.forecastAI.extractMostRecentWeatherEntryTitle(weatherEntriesList)
+        XCTAssertFalse(mostRecentTitle.isEmpty)
+        XCTAssert(mostRecentTitle.lowercaseString.containsString("current condition"))
     }
 
 }
