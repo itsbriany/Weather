@@ -27,7 +27,7 @@
                                 </items>
                             </toolbar>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="132" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ysv-MP-mYk">
-                                <rect key="frame" x="0.0" y="303" width="414" height="389"/>
+                                <rect key="frame" x="0.0" y="148" width="414" height="544"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherEntryCell" rowHeight="132" id="k1c-lA-gsE" customClass="WeatherEntryCell" customModule="Weather" customModuleProvider="target">
@@ -38,30 +38,29 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsl-42-aGD">
-                                                    <rect key="frame" x="8" y="8" width="115" height="116"/>
+                                                    <rect key="frame" x="8" y="8" width="138" height="116"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="115" id="2Qm-X1-LJf"/>
+                                                        <constraint firstAttribute="width" constant="138" id="K6m-Ty-rJW"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="47"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="flE-WD-KWR">
-                                                    <rect key="frame" x="131" y="2" width="283" height="128"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Weather Title" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="flE-WD-KWR">
+                                                    <rect key="frame" x="154" y="30" width="232" height="72"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="flE-WD-KWR" secondAttribute="trailing" id="1wU-Aj-flc"/>
-                                                <constraint firstItem="flE-WD-KWR" firstAttribute="leading" secondItem="fsl-42-aGD" secondAttribute="trailing" constant="8" symbolic="YES" id="4FC-CT-EeR"/>
-                                                <constraint firstItem="fsl-42-aGD" firstAttribute="leading" secondItem="ccg-nj-MzR" secondAttribute="leadingMargin" id="7jk-6Y-GgV"/>
-                                                <constraint firstItem="fsl-42-aGD" firstAttribute="centerY" secondItem="ccg-nj-MzR" secondAttribute="centerY" id="Oot-F2-EsS"/>
-                                                <constraint firstItem="fsl-42-aGD" firstAttribute="centerY" secondItem="flE-WD-KWR" secondAttribute="centerY" id="eu6-2Q-ne2"/>
-                                                <constraint firstItem="flE-WD-KWR" firstAttribute="top" secondItem="ccg-nj-MzR" secondAttribute="topMargin" constant="-6" id="fOz-CX-0sg"/>
-                                                <constraint firstItem="fsl-42-aGD" firstAttribute="top" secondItem="ccg-nj-MzR" secondAttribute="topMargin" id="uud-9W-8qA"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="top" secondItem="ccg-nj-MzR" secondAttribute="topMargin" id="FdQ-oy-q62"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="centerY" secondItem="flE-WD-KWR" secondAttribute="centerY" id="Oqy-in-LFl"/>
+                                                <constraint firstItem="flE-WD-KWR" firstAttribute="leading" secondItem="fsl-42-aGD" secondAttribute="trailing" constant="8" symbolic="YES" id="Qvr-LP-9JD"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="centerY" secondItem="ccg-nj-MzR" secondAttribute="centerY" id="S7T-JI-EI9"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="leading" secondItem="ccg-nj-MzR" secondAttribute="leadingMargin" id="Y78-8o-xIx"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="flE-WD-KWR" secondAttribute="trailing" constant="20" id="drg-XH-tTe"/>
+                                                <constraint firstItem="flE-WD-KWR" firstAttribute="top" secondItem="ccg-nj-MzR" secondAttribute="topMargin" constant="22" id="ep9-Qy-rPO"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
@@ -78,13 +77,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="top" secondItem="ysv-MP-mYk" secondAttribute="bottom" id="A95-jd-y3T"/>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="leading" secondItem="ysv-MP-mYk" secondAttribute="leading" id="Cfo-M9-WiR"/>
-                            <constraint firstItem="ysv-MP-mYk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="283" id="Uef-VG-xhN"/>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="el8-39-rJa"/>
-                            <constraint firstAttribute="trailing" secondItem="Zlx-zq-yRg" secondAttribute="trailing" id="fVK-1R-fTx"/>
-                            <constraint firstItem="ysv-MP-mYk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lMo-5u-fC9"/>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="trailing" secondItem="ysv-MP-mYk" secondAttribute="trailing" id="vhc-Wx-slL"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="top" secondItem="ysv-MP-mYk" secondAttribute="bottom" id="AeU-iG-oAI"/>
+                            <constraint firstItem="ysv-MP-mYk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="128" id="BcF-qd-inT"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="LM6-bQ-OZe"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="leading" secondItem="ysv-MP-mYk" secondAttribute="leading" id="X0f-xS-gpi"/>
+                            <constraint firstAttribute="trailing" secondItem="Zlx-zq-yRg" secondAttribute="trailing" id="fZg-dL-jL1"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="trailing" secondItem="ysv-MP-mYk" secondAttribute="trailing" id="g1w-UW-jSF"/>
+                            <constraint firstItem="ysv-MP-mYk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lDS-4X-HUm"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>

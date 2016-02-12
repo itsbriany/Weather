@@ -17,7 +17,7 @@
 		D34AE8E41C6BA44D00CE63D8 /* Weather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D34AE8E21C6BA44D00CE63D8 /* Weather.xcdatamodeld */; };
 		D34AE8E61C6BA44D00CE63D8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D34AE8E51C6BA44D00CE63D8 /* Assets.xcassets */; };
 		D34AE8E91C6BA44D00CE63D8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D34AE8E71C6BA44D00CE63D8 /* LaunchScreen.storyboard */; };
-		D34AE8F41C6BA44E00CE63D8 /* WeatherTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34AE8F31C6BA44E00CE63D8 /* WeatherTests.swift */; };
+		D34AE8F41C6BA44E00CE63D8 /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34AE8F31C6BA44E00CE63D8 /* MainViewControllerTests.swift */; };
 		D34AE8FF1C6BA44E00CE63D8 /* WeatherUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34AE8FE1C6BA44E00CE63D8 /* WeatherUITests.swift */; };
 		D37082E21C6E31CD00CF8F63 /* ForecastAI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37082E11C6E31CD00CF8F63 /* ForecastAI.swift */; };
 		D37082E41C6E31F400CF8F63 /* ForecastAITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37082E31C6E31F400CF8F63 /* ForecastAITests.swift */; };
@@ -56,7 +56,7 @@
 		D34AE8E81C6BA44D00CE63D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D34AE8EA1C6BA44D00CE63D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D34AE8EF1C6BA44D00CE63D8 /* WeatherTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		D34AE8F31C6BA44E00CE63D8 /* WeatherTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherTests.swift; sourceTree = "<group>"; };
+		D34AE8F31C6BA44E00CE63D8 /* MainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerTests.swift; sourceTree = "<group>"; };
 		D34AE8F51C6BA44E00CE63D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D34AE8FA1C6BA44E00CE63D8 /* WeatherUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D34AE8FE1C6BA44E00CE63D8 /* WeatherUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherUITests.swift; sourceTree = "<group>"; };
@@ -172,7 +172,7 @@
 		D34AE8F21C6BA44E00CE63D8 /* WeatherTests */ = {
 			isa = PBXGroup;
 			children = (
-				D34AE8F31C6BA44E00CE63D8 /* WeatherTests.swift */,
+				D34AE8F31C6BA44E00CE63D8 /* MainViewControllerTests.swift */,
 				D34AE8F51C6BA44E00CE63D8 /* Info.plist */,
 				D3BCB2E81C6CE19300E41848 /* FeedParserTests.swift */,
 				D37082E31C6E31F400CF8F63 /* ForecastAITests.swift */,
@@ -349,7 +349,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D33BF8EF1C6CE8C000CAE18C /* FeedParserTests.swift in Sources */,
-				D34AE8F41C6BA44E00CE63D8 /* WeatherTests.swift in Sources */,
+				D34AE8F41C6BA44E00CE63D8 /* MainViewControllerTests.swift in Sources */,
 				D37082E41C6E31F400CF8F63 /* ForecastAITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

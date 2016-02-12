@@ -13,6 +13,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Properties
     @IBOutlet weak var weatherEntryTableView: UITableView!
     let weatherEntryCellIdentifier = "WeatherEntryCell"
+    var forecastAI: ForecastAI = ForecastAI()
     var parser: FeedParser!
     
     
@@ -48,6 +49,35 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func updateWeatherEntryCell(cell: WeatherEntryCell, indexPath: NSIndexPath) {
         cell.titleTextView.text = self.parser.entriesList[indexPath.row].title
+        cell.weatherEmojiLabel.text = extractWeatherConditionEmoji(cell, indexPath: indexPath)
+    }
+    
+    // MARK: HELPERS
+    private func extractWeatherConditionEmoji(cell: WeatherEntryCell, indexPath: NSIndexPath) -> String {
+        let text = self.parser.entriesList[indexPath.row].title
+        let weatherCondition = self.forecastAI.getWeatherConditionFromText(text!)
+        switch (weatherCondition) {
+            case WeatherCondition.Cloudy:
+                return "☁️"
+            case WeatherCondition.Lightning:
+                return "🌩"
+            case WeatherCondition.Rainy:
+                return "🌧"
+            case WeatherCondition.Snowy:
+                return "🌨"
+            case WeatherCondition.Sunny:
+                return "☀️"
+            case WeatherCondition.SunnyCloudy:
+                return "🌤"
+            case WeatherCondition.Sunshower:
+                return "🌦"
+            case WeatherCondition.Tornado:
+                return "🌪"
+            case WeatherCondition.Windy:
+                return "🌬"
+            default:
+                return "X"
+        }
     }
 }
 

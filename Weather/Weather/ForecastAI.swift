@@ -18,7 +18,7 @@ class ForecastAI {
             return WeatherCondition.Sunshower
         } else if lowerCaseText.containsString("tornado") || (lowerCaseText.containsString("high") && lowerCaseText.containsString("wind")) {
             return WeatherCondition.Tornado
-        } else if lowerCaseText.containsString("snow") || lowerCaseText.containsString("ice") || lowerCaseText.containsString("flurr") {
+        } else if lowerCaseText.containsString("snow") || lowerCaseText.containsString("ice") || lowerCaseText.containsString("flurr")  || lowerCaseText.containsString("cold") {
             return WeatherCondition.Snowy
         } else if lowerCaseText.containsString("wind") {
             return WeatherCondition.Windy

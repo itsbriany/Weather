@@ -1,5 +1,5 @@
 //
-//  WeatherTests.swift
+//  MainViewControllerTests.swift
 //  WeatherTests
 //
 //  Created by Brian Yip on 2016-02-10.
@@ -9,7 +9,7 @@
 import XCTest
 @testable import Weather
 
-class WeatherTests: XCTestCase {
+class MainViewControllerTests: XCTestCase {
     
     var controller: MainViewController!
     
