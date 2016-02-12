@@ -48,6 +48,16 @@
                ReferencedContainer = "container:Weather.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D33BF8DE1C6CE62F00CAE18C"
+               BuildableName = "FeedParserTests.xctest"
+               BlueprintName = "FeedParserTests"
+               ReferencedContainer = "container:Weather.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference

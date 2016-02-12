@@ -18,25 +18,78 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="SvM-zq-gwT">
-                                <rect key="frame" x="20" y="28" width="374" height="581"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlx-zq-yRg">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="zhv-YS-DUT"/>
+                                    <barButtonItem title="🌐" id="Rct-uk-JJB"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="POk-RY-aqs"/>
+                                </items>
+                            </toolbar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="132" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ysv-MP-mYk">
+                                <rect key="frame" x="0.0" y="303" width="414" height="389"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherEntryCell" rowHeight="132" id="k1c-lA-gsE" customClass="WeatherEntryCell" customModule="Weather" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="132"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k1c-lA-gsE" id="ccg-nj-MzR">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="131.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="flE-WD-KWR">
+                                                    <rect key="frame" x="131" y="2" width="283" height="128"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsl-42-aGD">
+                                                    <rect key="frame" x="8" y="8" width="115" height="116"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="115" id="2Qm-X1-LJf"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="flE-WD-KWR" secondAttribute="trailing" id="1wU-Aj-flc"/>
+                                                <constraint firstItem="flE-WD-KWR" firstAttribute="leading" secondItem="fsl-42-aGD" secondAttribute="trailing" constant="8" symbolic="YES" id="4FC-CT-EeR"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="leading" secondItem="ccg-nj-MzR" secondAttribute="leadingMargin" id="7jk-6Y-GgV"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="centerY" secondItem="ccg-nj-MzR" secondAttribute="centerY" id="Oot-F2-EsS"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="centerY" secondItem="flE-WD-KWR" secondAttribute="centerY" id="eu6-2Q-ne2"/>
+                                                <constraint firstItem="flE-WD-KWR" firstAttribute="top" secondItem="ccg-nj-MzR" secondAttribute="topMargin" constant="-6" id="fOz-CX-0sg"/>
+                                                <constraint firstItem="fsl-42-aGD" firstAttribute="top" secondItem="ccg-nj-MzR" secondAttribute="topMargin" id="uud-9W-8qA"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="titleTextView" destination="flE-WD-KWR" id="6bm-20-Jnd"/>
+                                            <outlet property="weatherEmojiLabel" destination="fsl-42-aGD" id="sMe-Lo-HoM"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="w1P-A8-Vua"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="7yz-9P-uN4"/>
+                                </connections>
+                            </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="SvM-zq-gwT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="M1s-dy-Jaf"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="SvM-zq-gwT" secondAttribute="bottom" constant="127" id="Reh-h3-yje"/>
-                            <constraint firstItem="SvM-zq-gwT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Tts-Wc-G4V"/>
-                            <constraint firstItem="SvM-zq-gwT" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="iwu-el-Ez0"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="top" secondItem="ysv-MP-mYk" secondAttribute="bottom" id="A95-jd-y3T"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="leading" secondItem="ysv-MP-mYk" secondAttribute="leading" id="Cfo-M9-WiR"/>
+                            <constraint firstItem="ysv-MP-mYk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="283" id="Uef-VG-xhN"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="el8-39-rJa"/>
+                            <constraint firstAttribute="trailing" secondItem="Zlx-zq-yRg" secondAttribute="trailing" id="fVK-1R-fTx"/>
+                            <constraint firstItem="ysv-MP-mYk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lMo-5u-fC9"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="trailing" secondItem="ysv-MP-mYk" secondAttribute="trailing" id="vhc-Wx-slL"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
-                        <outlet property="textView" destination="SvM-zq-gwT" id="uov-3l-ipC"/>
+                        <outlet property="weatherEntryTableView" destination="ysv-MP-mYk" id="oPb-7w-gOC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

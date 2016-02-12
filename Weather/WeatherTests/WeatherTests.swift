@@ -31,7 +31,23 @@ class WeatherTests: XCTestCase {
     }
     
     func testGetRSSFeed() {
+        // Given we have a RSS feed URL
         let url = NSURL(string: "http://weather.gc.ca/rss/city/on-76_e.xml")
+        
+        // When we pull data, we should get a valid XML file
         XCTAssert(self.controller.getRSSFeed(url!))
+        
+        // We should get the RSS feeds from the XML
+        XCTAssertGreaterThanOrEqual(self.controller.weatherEntryList!.count, 7)
+        
+        // All entries should contain data
+        for weatherEntry in self.controller.weatherEntryList! {
+            XCTAssertNotNil(weatherEntry.summary)
+            XCTAssertNotNil(weatherEntry.title)
+        }
+    }
+    
+    func testRenderWeatherForcasts() {
+        
     }
 }

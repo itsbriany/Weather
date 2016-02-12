@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  Weather
 //
 //  Created by Brian Yip on 2016-02-10.
@@ -8,50 +8,56 @@
 
 import UIKit
 
-class MainViewController: UIViewController, NSXMLParserDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
 
+    // MARK: Emoji Mapping http://www.iemoji.com/emoji-cheat-sheet/weather
+    private enum WeatherCondition {
+        case Cloudy,
+        Windy,
+        CloudWithRain,
+        Tornado,
+        Lightning,
+        Snow,
+        SunBehindCloudWithRain,
+        SunnyCloudy,
+        SunCoveredByCloud,
+        Sunny
+    }
+    
+    
     // MARK: Properties
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var weatherEntryTableView: UITableView!
+    let weatherEntryCellIdentifier = "WeatherEntryCell"
+    var parser: FeedParser!
     
-    var parser: NSXMLParser!
     
+    // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
+        let url = NSURL(string: "http://weather.gc.ca/rss/city/on-76_e.xml")
+        getRSSFeed(url!)
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
-    // MARK: NSXMLParserDelegate Implementation
-    func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
-        NSLog("Found element")
-        // TODO display the current weather conditions and the short
-        // version of the 7 day forecast. i.e. get the title attribute
     }
     
-    func parser(parser: NSXMLParser, didEndElement elementName: String, namespaceURI: String?, qualifiedName qName: String?) {
+    
+    // MARK: UITableViewDataSource Implementation
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return parser.entriesList.count
     }
     
-    func parser(parser: NSXMLParser, foundCharacters string: String) {
-    }
-    
-    func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier(self.weatherEntryCellIdentifier, forIndexPath: indexPath) as! WeatherEntryCell
+        return cell
     }
     
     
     // MARK: Interface
     func getRSSFeed(url: NSURL) -> Bool {
-        loadXMLParser(url)
-        return self.parser.parse()
-    }
-    
-    private func loadXMLParser(url: NSURL) {
-        self.parser = NSXMLParser(contentsOfURL: url)
-        self.parser.delegate = self
-        self.parser.shouldResolveExternalEntities = false
+        self.parser = FeedParser(url: url)
+        return self.parser.parseFeed()
     }
 }
 
