@@ -9,21 +9,6 @@
 import UIKit
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-
-    // MARK: Emoji Mapping http://www.iemoji.com/emoji-cheat-sheet/weather
-    private enum WeatherCondition {
-        case Cloudy,
-        Windy,
-        CloudWithRain,
-        Tornado,
-        Lightning,
-        Snow,
-        SunBehindCloudWithRain,
-        SunnyCloudy,
-        SunCoveredByCloud,
-        Sunny
-    }
-    
     
     // MARK: Properties
     @IBOutlet weak var weatherEntryTableView: UITableView!
@@ -50,6 +35,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(self.weatherEntryCellIdentifier, forIndexPath: indexPath) as! WeatherEntryCell
+        updateWeatherEntryCell(cell, indexPath: indexPath)
         return cell
     }
     
@@ -58,6 +44,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func getRSSFeed(url: NSURL) -> Bool {
         self.parser = FeedParser(url: url)
         return self.parser.parseFeed()
+    }
+    
+    func updateWeatherEntryCell(cell: WeatherEntryCell, indexPath: NSIndexPath) {
+        cell.titleTextView.text = self.parser.entriesList[indexPath.row].title
     }
 }
 
