@@ -26,33 +26,55 @@
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="POk-RY-aqs"/>
                                 </items>
                             </toolbar>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Current Weather Status" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vFP-7t-vdv">
+                                <rect key="frame" x="20" y="130" width="374" height="69"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="69" id="ZJq-Eh-J5L"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Date" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BqK-Ct-fwh">
+                                <rect key="frame" x="20" y="51" width="374" height="61"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="61" id="Jy2-NZ-EhO"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="132" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ysv-MP-mYk">
-                                <rect key="frame" x="0.0" y="148" width="414" height="544"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="207" width="414" height="485"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeatherEntryCell" rowHeight="132" id="k1c-lA-gsE" customClass="WeatherEntryCell" customModule="Weather" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="132"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="k1c-lA-gsE" id="ccg-nj-MzR">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="131.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="132"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Weather Title" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="flE-WD-KWR">
+                                                    <rect key="frame" x="154" y="30" width="232" height="72"/>
+                                                    <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fsl-42-aGD">
                                                     <rect key="frame" x="8" y="8" width="138" height="116"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="138" id="K6m-Ty-rJW"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" type="system" pointSize="47"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="Weather Title" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="flE-WD-KWR">
-                                                    <rect key="frame" x="154" y="30" width="232" height="72"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                </textView>
                                             </subviews>
+                                            <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <constraints>
                                                 <constraint firstItem="fsl-42-aGD" firstAttribute="top" secondItem="ccg-nj-MzR" secondAttribute="topMargin" id="FdQ-oy-q62"/>
                                                 <constraint firstItem="fsl-42-aGD" firstAttribute="centerY" secondItem="flE-WD-KWR" secondAttribute="centerY" id="Oqy-in-LFl"/>
@@ -75,19 +97,27 @@
                                 </connections>
                             </tableView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="darkTextColor"/>
                         <constraints>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="top" secondItem="ysv-MP-mYk" secondAttribute="bottom" id="AeU-iG-oAI"/>
-                            <constraint firstItem="ysv-MP-mYk" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="128" id="BcF-qd-inT"/>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="LM6-bQ-OZe"/>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="leading" secondItem="ysv-MP-mYk" secondAttribute="leading" id="X0f-xS-gpi"/>
-                            <constraint firstAttribute="trailing" secondItem="Zlx-zq-yRg" secondAttribute="trailing" id="fZg-dL-jL1"/>
-                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="trailing" secondItem="ysv-MP-mYk" secondAttribute="trailing" id="g1w-UW-jSF"/>
-                            <constraint firstItem="ysv-MP-mYk" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lDS-4X-HUm"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="top" secondItem="ysv-MP-mYk" secondAttribute="bottom" id="8Fy-Ga-InD"/>
+                            <constraint firstItem="BqK-Ct-fwh" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="31" id="IWL-2d-VkR"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="bottom" secondItem="wfy-db-euE" secondAttribute="top" id="a9W-71-E8g"/>
+                            <constraint firstAttribute="trailing" secondItem="ysv-MP-mYk" secondAttribute="trailing" id="e8d-Uw-v6P"/>
+                            <constraint firstItem="vFP-7t-vdv" firstAttribute="centerX" secondItem="ysv-MP-mYk" secondAttribute="centerX" id="fSy-s2-zHX"/>
+                            <constraint firstItem="ysv-MP-mYk" firstAttribute="trailing" secondItem="Zlx-zq-yRg" secondAttribute="trailing" id="gAs-UB-y19"/>
+                            <constraint firstItem="vFP-7t-vdv" firstAttribute="top" secondItem="BqK-Ct-fwh" secondAttribute="bottom" constant="18" id="gaM-Y8-eRH"/>
+                            <constraint firstItem="BqK-Ct-fwh" firstAttribute="trailing" secondItem="vFP-7t-vdv" secondAttribute="trailing" id="iO2-Uw-oNf"/>
+                            <constraint firstItem="ysv-MP-mYk" firstAttribute="top" secondItem="vFP-7t-vdv" secondAttribute="bottom" constant="8" symbolic="YES" id="kac-2g-1Y3"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="lXb-DZ-Jum"/>
+                            <constraint firstItem="BqK-Ct-fwh" firstAttribute="leading" secondItem="vFP-7t-vdv" secondAttribute="leading" id="urq-Mx-feR"/>
+                            <constraint firstItem="Zlx-zq-yRg" firstAttribute="leading" secondItem="ysv-MP-mYk" secondAttribute="leading" id="wSH-wi-4Fq"/>
+                            <constraint firstItem="BqK-Ct-fwh" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="xm0-wH-uaO"/>
                         </constraints>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="currrentWeatherEntryTextView" destination="vFP-7t-vdv" id="F6i-j3-DYf"/>
+                        <outlet property="dateTextView" destination="BqK-Ct-fwh" id="29H-YQ-e80"/>
                         <outlet property="weatherEntryTableView" destination="ysv-MP-mYk" id="oPb-7w-gOC"/>
                     </connections>
                 </viewController>

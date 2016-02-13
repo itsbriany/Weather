@@ -17,6 +17,7 @@ class MainViewControllerTests: XCTestCase {
         super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         self.controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
+        let _ = controller.view
     }
     
     override func tearDown() {
@@ -25,7 +26,6 @@ class MainViewControllerTests: XCTestCase {
     
     func testGetRSSFeed() {
         // Given we have a RSS feed URL and have loaded the controller's main view
-        let _ = controller.view
         let url = NSURL(string: "http://weather.gc.ca/rss/city/on-76_e.xml")
         
         // When we pull data, we should get a valid XML file
@@ -33,9 +33,26 @@ class MainViewControllerTests: XCTestCase {
         
         // The table view should display at least 7 rows
         XCTAssertGreaterThanOrEqual(self.controller.weatherEntryTableView.accessibilityElementCount(), 7)
+        
+        // The current conditions should not dispay in the table
+        for cell in self.controller.weatherEntryTableView.visibleCells {
+            if let weatherEntryCell = cell as? WeatherEntryCell {
+                let text = weatherEntryCell.titleTextView.text.lowercaseString
+                XCTAssertFalse(text.containsString(ForecastAI.CurrentWeatherConditionIdentifier))
+            }
+        }
+        
+        // The current weather condition should display
+        XCTAssert(self.controller.currrentWeatherEntryTextView.text.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier))
     }
     
-    func testRenderWeatherForcasts() {
+    func testSetCurrentDate() {
+        // Given we have a date
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "EEEE, MMMM d"
+        let dateString = dateFormatter.stringFromDate(NSDate())
         
+        // When the view loads, we should see the date format: <Day Name>, <Month Name> <Day> 
+        XCTAssertEqual(self.controller.dateTextView.text, dateString)
     }
 }

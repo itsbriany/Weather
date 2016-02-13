@@ -26,6 +26,7 @@ class ForecastAITests: XCTestCase {
         // Given we have various weather feeds
         let cloudyText = "LOTS OF CLOUDS WITH VERY LITTLE RAIN"
         let cloudyText2 = "foggy envrionments"
+        let cloudyText3 = "Sunday: very cloudy"
         let windyText = "WINDY FROM THE NORTH"
         let rainyText = "A VERY RAINY DAY"
         let tornadoText = "SUPER HIGH WINDS WITH FREQUENT TORNADOES"
@@ -39,6 +40,7 @@ class ForecastAITests: XCTestCase {
         // When we read the text, we should be able to determine the weather conditions
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(cloudyText), WeatherCondition.Cloudy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(cloudyText2), WeatherCondition.Cloudy)
+        XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(cloudyText3), WeatherCondition.Cloudy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(windyText), WeatherCondition.Windy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(rainyText), WeatherCondition.Rainy)
         XCTAssertEqual(self.forecastAI.getWeatherConditionFromText(tornadoText), WeatherCondition.Tornado)
@@ -62,7 +64,7 @@ class ForecastAITests: XCTestCase {
         // Should contain current conditions
         let mostRecentTitle = self.forecastAI.extractMostRecentWeatherEntryTitle(weatherEntriesList)
         XCTAssertFalse(mostRecentTitle.isEmpty)
-        XCTAssert(mostRecentTitle.lowercaseString.containsString("current condition"))
+        XCTAssert(mostRecentTitle.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier))
     }
 
 }

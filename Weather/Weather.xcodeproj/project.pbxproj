@@ -44,8 +44,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		D33BF8E11C6CE62F00CAE18C /* BoogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoogTests.swift; sourceTree = "<group>"; };
-		D33BF8E31C6CE62F00CAE18C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D33BF8F11C6CF8BF00CAE18C /* WeatherEntryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherEntryCell.swift; sourceTree = "<group>"; };
 		D3416FBD1C6BC15900C9D482 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		D34AE8D81C6BA44D00CE63D8 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -97,15 +95,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		D33BF8E01C6CE62F00CAE18C /* BoogTests */ = {
-			isa = PBXGroup;
-			children = (
-				D33BF8E11C6CE62F00CAE18C /* BoogTests.swift */,
-				D33BF8E31C6CE62F00CAE18C /* Info.plist */,
-			);
-			path = BoogTests;
-			sourceTree = "<group>";
-		};
 		D33BF8F01C6CF89300CAE18C /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -139,7 +128,6 @@
 				D34AE8DA1C6BA44D00CE63D8 /* Weather */,
 				D34AE8F21C6BA44E00CE63D8 /* WeatherTests */,
 				D34AE8FD1C6BA44E00CE63D8 /* WeatherUITests */,
-				D33BF8E01C6CE62F00CAE18C /* BoogTests */,
 				D34AE8D91C6BA44D00CE63D8 /* Products */,
 			);
 			sourceTree = "<group>";
