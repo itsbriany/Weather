@@ -16,6 +16,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var weatherEntryTableView: UITableView!
     
     let weatherEntryCellIdentifier = "WeatherEntryCell"
+    let detailsViewSegueIdentifier = "DetailsSegue"
+    let dateTextViewFontSize: CGFloat = 18
     
     var forecastAI: ForecastAI = ForecastAI()
     var parser: FeedParser!
@@ -24,6 +26,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.dateTextView.font = UIFont.boldSystemFontOfSize(self.dateTextViewFontSize)
         let url = NSURL(string: "http://weather.gc.ca/rss/city/ns-19_e.xml")
         getRSSFeed(url!)
         setDateText()
@@ -45,6 +48,21 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCellWithIdentifier(self.weatherEntryCellIdentifier, forIndexPath: indexPath) as! WeatherEntryCell
         updateWeatherEntryCell(cell, indexPath: indexPath)
         return cell
+    }
+    
+    
+    // MARK: Navigation
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == self.detailsViewSegueIdentifier {
+            let detailsViewController = segue.destinationViewController as! DetailsViewController
+            
+            if let selectedWeatherEntryCell = sender as? WeatherEntryCell {
+                let indexPath = self.weatherEntryTableView.indexPathForCell(selectedWeatherEntryCell)
+                let selectedWeatherEntry = self.parser.entriesList[indexPath!.row]
+                detailsViewController.summaryText = selectedWeatherEntry.summary
+            }
+            
+        }
     }
     
     
@@ -81,6 +99,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.dateTextView.text = dateString
     }
     
+    
     // MARK: Helpers
     private func extractWeatherConditionEmoji(cell: WeatherEntryCell, indexPath: NSIndexPath) -> String {
         let text = self.parser.entriesList[indexPath.row].title
@@ -111,5 +130,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
         return "X"
     }
+    
 }
 

@@ -9,11 +9,16 @@
 import UIKit
 
 class DetailsViewController: UIViewController {
+    
+    // MARK: Properties
+    @IBOutlet weak var summaryTextView: UITextView!
+    
+    var summaryText: String?
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        self.summaryTextView.text = summaryText
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,7 +27,7 @@ class DetailsViewController: UIViewController {
     }
     
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -30,6 +35,6 @@ class DetailsViewController: UIViewController {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
     }
-    */
+
 
 }

@@ -26,6 +26,7 @@ class FeedParser: NSObject, NSXMLParserDelegate {
         self.entriesList = [WeatherEntryModel]()
     }
     
+    
     // MARK: NSXMLParserDelegate Implementation
     func parser(parser: NSXMLParser, didStartElement elementName: String, namespaceURI: String?, qualifiedName qName: String?, attributes attributeDict: [String : String]) {
         
@@ -50,7 +51,6 @@ class FeedParser: NSObject, NSXMLParserDelegate {
     }
     
     func parser(parser: NSXMLParser, foundCharacters string: String) {
-        // if !string.containsString("\n") && self.foundEntry {
         if self.foundEntry {
             if self.currentElement == "title" && self.dummyWeatherEntry.title?.isEmpty == true {
                 self.dummyWeatherEntry.title = string
@@ -63,6 +63,7 @@ class FeedParser: NSObject, NSXMLParserDelegate {
     func parser(parser: NSXMLParser, parseErrorOccurred parseError: NSError) {
         NSLog("XML Parse error: " + parseError.description)
     }
+    
     
     // MARK: Interface
     func parseFeed() -> Bool {
