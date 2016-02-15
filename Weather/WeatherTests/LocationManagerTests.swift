@@ -10,13 +10,15 @@ import XCTest
 import MapKit
 @testable import Weather
 
-class LocationManagerTests: XCTestCase {
+class LocationManagerTests: XCTestCase, CLLocationManagerDelegate {
 
     var locationManager: LocationManager!
+    var testGeoLocationCoordinatesReadyExpectation: XCTestExpectation!
     
     override func setUp() {
         super.setUp()
         self.locationManager = LocationManager()
+        self.locationManager.locationManager.delegate = self
     }
     
     override func tearDown() {
@@ -26,22 +28,33 @@ class LocationManagerTests: XCTestCase {
     func testGeolocationCoordinates() {
         // Given we have geolocation services on and have a location
         XCTAssertEqual(CLLocationManager.authorizationStatus(), CLAuthorizationStatus.AuthorizedWhenInUse)
-        XCTAssertNotNil(self.locationManager.location)
         
         // When an async reverse geolocation lookup is performed
-        let readyExpectation = expectationWithDescription("Location manager should have its current placemark set")
-        
+        self.testGeoLocationCoordinatesReadyExpectation = expectationWithDescription("Location manager should have its current placemark set")
+        self.locationManager.startUpdatingLocation()
         
         // We should know the city representing our current location
-        self.locationManager.updateCurrentPlacemark({ error -> Void in
-            XCTAssertNil(error, "Placemark Error")
-            XCTAssertEqual(self.locationManager.currentPlacemark?.locality, "Halifax")
-            readyExpectation.fulfill()
-        })
+        // (This will be called in the didUpdateLocations delegate)
         
         waitForExpectationsWithTimeout(5, handler: { error in
             XCTAssertNil(error, "Error")
         })
     }
 
+    
+    // MARK: CLLocationManagerDelegate Implementation
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.locationManager.handleLocationUpdate(manager, locations: locations, callback: { error -> Void in
+            XCTAssertNil(error, "Placemark Error")
+            XCTAssertNotNil(self.locationManager.location)
+            XCTAssertEqual(self.locationManager.currentPlacemark?.locality, "Halifax")
+            self.testGeoLocationCoordinatesReadyExpectation.fulfill()
+        })
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    }
 }

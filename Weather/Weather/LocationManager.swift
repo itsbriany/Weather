@@ -14,6 +14,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     // MARK: Properties
     let locationManager = CLLocationManager()
     
+    var hasFoundFirstLocation = false
     var location: CLLocation?
     var currentPlacemark: CLPlacemark?
     
@@ -23,12 +24,17 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         locationManager.distanceFilter = kCLDistanceFilterNone;
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         authenticateGeolocationServices()
-        self.locationManager.startUpdatingLocation()
     }
     
     // MARK: CLLocationManagerDelegate Implementation
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.location = CLLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
+        handleLocationUpdate(manager, locations: locations, callback: {error -> Void in
+            if error != nil {
+                print("Error handling location update: " + error!.description)
+                return
+            }
+            print("Current location has updated to: " + self.currentPlacemark!.locality!)
+        })
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -39,7 +45,27 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     
     
     // MARK: Interface
-    func updateCurrentPlacemark(callback: (error: NSError?) -> Void) {
+    func handleLocationUpdate(manager: CLLocationManager, locations: [CLLocation], callback: (error: NSError?) -> Void) {
+        self.location = CLLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
+        if !self.hasFoundFirstLocation {
+            self.hasFoundFirstLocation = true
+            updateCurrentPlacemark(callback)
+        }
+    }
+    
+    func startUpdatingLocation() {
+        self.locationManager.startUpdatingLocation()
+    }
+    
+    
+    // MARK: Private Interface
+    private func authenticateGeolocationServices() {
+        if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.AuthorizedWhenInUse {
+            self.locationManager.requestWhenInUseAuthorization()
+        }
+    }
+    
+    private func updateCurrentPlacemark(callback: (error: NSError?) -> Void) {
         if self.location != nil {
             let geoCoder = CLGeocoder()
             geoCoder.reverseGeocodeLocation(self.location!, completionHandler: {(placemarks, error)-> Void in
@@ -56,14 +82,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
                 print("Something went wrong when requesting geolocation placemarks")
                 callback(error: error)
             })
-        }
-    }
-    
-    
-    // MARK: Private Interface
-    private func authenticateGeolocationServices() {
-        if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.AuthorizedWhenInUse {
-            self.locationManager.requestWhenInUseAuthorization()
         }
     }
 }

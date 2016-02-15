@@ -20,13 +20,28 @@
                ReferencedContainer = "container:Weather.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "D34AE8EE1C6BA44D00CE63D8"
+               BuildableName = "WeatherTests.xctest"
+               BlueprintName = "WeatherTests"
+               ReferencedContainer = "container:Weather.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -37,6 +52,10 @@
                BlueprintName = "WeatherTests"
                ReferencedContainer = "container:Weather.xcodeproj">
             </BuildableReference>
+            <LocationScenarioReference
+               identifier = "../../WeatherTests/Halifax.gpx"
+               referenceType = "0">
+            </LocationScenarioReference>
          </TestableReference>
          <TestableReference
             skipped = "NO">
@@ -47,16 +66,10 @@
                BlueprintName = "WeatherUITests"
                ReferencedContainer = "container:Weather.xcodeproj">
             </BuildableReference>
-         </TestableReference>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D33BF8DE1C6CE62F00CAE18C"
-               BuildableName = "FeedParserTests.xctest"
-               BlueprintName = "FeedParserTests"
-               ReferencedContainer = "container:Weather.xcodeproj">
-            </BuildableReference>
+            <LocationScenarioReference
+               identifier = "../../WeatherTests/Halifax.gpx"
+               referenceType = "0">
+            </LocationScenarioReference>
          </TestableReference>
       </Testables>
       <MacroExpansion>
