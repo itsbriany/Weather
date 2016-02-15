@@ -29,9 +29,9 @@ class ForecastAI {
             return WeatherCondition.Lightning
         } else if lowerCaseText.containsString("cloud") || lowerCaseText.containsString("fog") {
             return WeatherCondition.Cloudy
-        } else if lowerCaseText.containsString("rain"){
+        } else if lowerCaseText.containsString("rain") || lowerCaseText.containsString("shower") {
             return WeatherCondition.Rainy
-        } else if lowerCaseText.containsString("sun") {
+        } else if lowerCaseText.containsString("sun") || lowerCaseText.containsString("clear") { // TODO Perhaps implement emoji for clear weather conditions
             return WeatherCondition.Sunny
         }
         return WeatherCondition.Error

@@ -7,21 +7,32 @@
 //
 
 import XCTest
+import MapKit
 @testable import Weather
 
-class MainViewControllerTests: XCTestCase {
+class MainViewControllerTests: XCTestCase, CLLocationManagerDelegate {
     
     var controller: MainViewController!
+    var testCurrentDateReadyExpectation: XCTestExpectation!
     
     override func setUp() {
         super.setUp()
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         self.controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
         let _ = controller.view
+        self.controller.locationManager.locationManager.delegate = self
     }
     
     override func tearDown() {
         super.tearDown()
+    }
+    
+    func testThatViewHasLoaded() {
+        XCTAssertNotNil(self.controller.view)
+    }
+    
+    func testThatWeatherTableViewHasLoaded() {
+        XCTAssertNotNil(self.controller.weatherEntryTableView, "The table view must load")
     }
     
     func testGetRSSFeed() {
@@ -46,13 +57,34 @@ class MainViewControllerTests: XCTestCase {
         XCTAssert(self.controller.currrentWeatherEntryTextView.text.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier))
     }
     
-    func testSetCurrentDate() {
-        // Given we have a date
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "EEEE, MMMM d"
-        let dateString = "Halifax " + dateFormatter.stringFromDate(NSDate())
-        
-        // When the view loads, we should see the date format: <Day Name>, <Month Name> <Day> 
-        XCTAssertEqual(self.controller.dateTextView.text, dateString)
+    func testCurrentDate() {
+        // Given we have a date and a view
+        self.testCurrentDateReadyExpectation = expectationWithDescription("The date should be set after a reverse CLLocationManager didUpdateLocations delegate fires")
+                
+        waitForExpectationsWithTimeout(3, handler: { error -> Void in
+            XCTAssertNil(error, "Error")
+        })
+    }
+    
+    
+    // MARK: CLLocationManagerDelegate Implementation
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        self.controller.updateDateText(manager, didUpdateLocations: locations, callback: { error -> Void in
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "EEEE, MMMM d"
+            let dateString = "Halifax " + dateFormatter.stringFromDate(NSDate())
+            
+            // When the view loads, we should see the date format: <Day Name>, <Month Name> <Day>
+            XCTAssertEqual(self.controller.dateTextView.text, dateString)
+            self.testCurrentDateReadyExpectation.fulfill()
+        })
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        XCTAssertNil(error, "Location Manager failed")
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("Authorization Status updated")
     }
 }

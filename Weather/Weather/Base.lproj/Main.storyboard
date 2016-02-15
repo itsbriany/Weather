@@ -166,7 +166,6 @@
         <!--Details-->
         <scene sceneID="kP1-yc-NgA">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="vpf-7o-ujF" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController storyboardIdentifier="DetailsViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="g5o-y5-tGL" customClass="DetailsViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AVR-mE-q6s"/>
@@ -200,13 +199,13 @@
                         <outlet property="summaryTextView" destination="7kH-el-MoR" id="Jth-Vs-YG4"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vpf-7o-ujF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2351" y="-46"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="IpG-vK-zbt">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="8AW-wl-4w2" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="01d-iO-RqC" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Mjr-CK-xF1">
@@ -218,6 +217,7 @@
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="NKH-9p-saT"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8AW-wl-4w2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="653" y="-68"/>
         </scene>

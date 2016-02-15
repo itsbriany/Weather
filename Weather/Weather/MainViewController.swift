@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
     // MARK: Properties
     @IBOutlet weak var currrentWeatherEntryTextView: UITextView!
@@ -31,11 +31,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.locationManager.locationManager.delegate = self
         self.dateTextView.font = UIFont.boldSystemFontOfSize(self.dateTextViewFontSize)
         let url = NSURL(string: "http://weather.gc.ca/rss/city/ns-19_e.xml")
         getRSSFeed(url!)
-        setDateText()
-        setCurrentLocation()
+        startUpdatingLocation()
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,6 +54,20 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let cell = tableView.dequeueReusableCellWithIdentifier(self.weatherEntryCellIdentifier, forIndexPath: indexPath) as! WeatherEntryCell
         updateWeatherEntryCell(cell, indexPath: indexPath)
         return cell
+    }
+    
+    
+    // MARK: CLLocationManagerDelegate Implementation
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        updateDateText(manager, didUpdateLocations: locations, callback: { error -> Void in })
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Location manager fail: " + error.description)
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        print("Authorization Status updated")
     }
     
     
@@ -79,7 +93,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func getRSSFeed(url: NSURL) -> Bool {
         self.parser = FeedParser(url: url)
         let feedParsedSuccessfully = self.parser.parseFeed()
+        
         setCurrentWeatherEntry()
+        
+        if feedParsedSuccessfully {
+            reloadTableView()
+        }
+        
         return feedParsedSuccessfully
     }
     
@@ -88,24 +108,29 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.weatherEmojiLabel.text = extractWeatherConditionEmoji(cell, indexPath: indexPath)
     }
     
-    func setCurrentWeatherEntry() {
-        let weatherEntryList = self.parser.entriesList
-        for entryIndex in 0 ..< weatherEntryList.count {
-            let entry = weatherEntryList[entryIndex]
-            if let entryTitle = entry.title {
-                if entryTitle.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier) {
-                    self.currrentWeatherEntryTextView.text = entryTitle + ForecastAI.DegreesUnit
-                    self.parser.entriesList.removeAtIndex(entryIndex)
-                }
-            }
-        }
+    
+    func startUpdatingLocation() {
+        self.locationManager.startUpdatingLocation()
     }
     
-    func setDateText() {
+    func getDateText() -> String {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d";
         let dateString = dateFormatter.stringFromDate(NSDate())
-        self.dateTextView.text = dateString
+        return dateString
+    }
+    
+    func updateDateText(manager: CLLocationManager, didUpdateLocations locations: [CLLocation], callback: (error: NSError?) -> Void) {
+        self.locationManager.handleLocationUpdate(manager, locations: locations, callback: {error -> Void in
+            if error != nil {
+                print("Error handling location update: " + error!.description)
+                callback(error: error)
+                return
+            }
+            let dateText = self.getDateText()
+            self.dateTextView.text = self.locationManager.currentPlacemark!.locality! + " " + dateText
+            callback(error: nil)
+        })
     }
     
     
@@ -140,7 +165,20 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return "X"
     }
     
-    private func setCurrentLocation() {
-        
+    private func setCurrentWeatherEntry() {
+        let weatherEntryList = self.parser.entriesList
+        for entryIndex in 0 ..< weatherEntryList.count {
+            let entry = weatherEntryList[entryIndex]
+            if let entryTitle = entry.title {
+                if entryTitle.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier) {
+                    self.currrentWeatherEntryTextView.text = entryTitle + ForecastAI.DegreesUnit
+                    self.parser.entriesList.removeAtIndex(entryIndex)
+                }
+            }
+        }
     }
+    
+    private func reloadTableView() {
+    }
+
 }
