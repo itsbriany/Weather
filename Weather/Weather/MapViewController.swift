@@ -9,21 +9,20 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController {
+class MapViewController: UIViewController, UINavigationControllerDelegate {
+    
     
     // MARK: Properties
     @IBOutlet weak var mapView: MKMapView!
     
     let regionRadius: CLLocationDistance = 1000
-    var currentLocation: CLLocation!
+    var currentLocation: CLLocation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        centerMapOnLocation(self.currentLocation)
+        centerMapOnLocation(self.currentLocation!)
         self.mapView.setUserTrackingMode(MKUserTrackingMode.Follow, animated: true)
     }
-    
-
     
     
     // MARK: Interface

@@ -18,18 +18,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlx-zq-yRg">
-                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
-                                <items>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="zhv-YS-DUT"/>
-                                    <barButtonItem title="🌐" id="Rct-uk-JJB">
-                                        <connections>
-                                            <segue destination="nzP-KE-0mb" kind="show" identifier="MapSegue" id="T8T-2n-6vu"/>
-                                        </connections>
-                                    </barButtonItem>
-                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="POk-RY-aqs"/>
-                                </items>
-                            </toolbar>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Current Weather Status" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vFP-7t-vdv">
                                 <rect key="frame" x="20" y="146" width="374" height="53"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -101,6 +89,18 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Zlx-zq-yRg">
+                                <rect key="frame" x="0.0" y="692" width="414" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="zhv-YS-DUT"/>
+                                    <barButtonItem title="🌐" id="Rct-uk-JJB">
+                                        <connections>
+                                            <segue destination="cxB-9Q-gV3" kind="presentation" identifier="MapSegue" id="hyW-KW-oP4"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="POk-RY-aqs"/>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -131,37 +131,41 @@
             </objects>
             <point key="canvasLocation" x="1653" y="-46"/>
         </scene>
-        <!--Map View Controller-->
-        <scene sceneID="Ayj-k4-Av4">
+        <!--Location-->
+        <scene sceneID="9Z4-S0-b7f">
             <objects>
-                <viewController id="nzP-KE-0mb" customClass="MapViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bJc-2k-zUY" customClass="MapViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="P3t-br-Qvj"/>
-                        <viewControllerLayoutGuide type="bottom" id="Vfx-Aj-lVj"/>
+                        <viewControllerLayoutGuide type="top" id="eGS-bm-hyB"/>
+                        <viewControllerLayoutGuide type="bottom" id="MN5-e6-6qe"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="8h2-fY-9yr">
+                    <view key="view" contentMode="scaleToFill" id="lAc-5U-GxE">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-ys-3zd">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="4sM-oz-xm8">
+                                <rect key="frame" x="0.0" y="64" width="414" height="672"/>
                             </mapView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="XEg-ys-3zd" firstAttribute="top" secondItem="8h2-fY-9yr" secondAttribute="top" id="1ns-RM-3gg"/>
-                            <constraint firstAttribute="trailing" secondItem="XEg-ys-3zd" secondAttribute="trailing" id="2fU-bf-sBl"/>
-                            <constraint firstItem="XEg-ys-3zd" firstAttribute="bottom" secondItem="Vfx-Aj-lVj" secondAttribute="top" id="fSC-DG-jMO"/>
-                            <constraint firstItem="XEg-ys-3zd" firstAttribute="leading" secondItem="8h2-fY-9yr" secondAttribute="leading" id="wXZ-KS-1aT"/>
-                        </constraints>
                     </view>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Location" id="UKe-zd-rjh">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="6oT-o4-OYz">
+                            <connections>
+                                <segue destination="krG-0Z-Tsg" kind="unwind" unwindAction="unwindFromMapView:" id="svJ-jM-fXc"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="mapView" destination="XEg-ys-3zd" id="PIp-Lu-K7t"/>
+                        <outlet property="mapView" destination="4sM-oz-xm8" id="pbN-wB-c66"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="iP4-UI-Xdj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="f0c-h8-j0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="krG-0Z-Tsg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="1653" y="919"/>
+            <point key="canvasLocation" x="2279" y="894"/>
         </scene>
         <!--Details-->
         <scene sceneID="kP1-yc-NgA">
@@ -220,6 +224,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8AW-wl-4w2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="653" y="-68"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="92j-ci-KJS">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cxB-9Q-gV3" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PD3-rQ-iJE">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="bJc-2k-zUY" kind="relationship" relationship="rootViewController" id="vfh-cj-S8T"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eaF-AH-ecE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1653" y="894"/>
         </scene>
     </scenes>
 </document>

@@ -11,15 +11,16 @@ import MapKit
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
+    static let WeatherEntryCellIdentifier = "WeatherEntryCell"
+    static let DetailsViewSegueIdentifier = "DetailsSegue"
+    static let MapViewSegueIdendifier = "MapSegue"
+    
     // MARK: Properties
     @IBOutlet weak var currrentWeatherEntryTextView: UITextView!
     @IBOutlet weak var dateTextView: UITextView!
     @IBOutlet weak var weatherEntryTableView: UITableView!
     
     let geoCoder =  CLGeocoder()
-    let weatherEntryCellIdentifier = "WeatherEntryCell"
-    let detailsViewSegueIdentifier = "DetailsSegue"
-    let mapViewSegueIdendifier = "MapSegue"
     let dateTextViewFontSize: CGFloat = 18
     
     var locationManager: LocationManager = LocationManager()
@@ -35,7 +36,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         self.dateTextView.font = UIFont.boldSystemFontOfSize(self.dateTextViewFontSize)
         let url = NSURL(string: "http://weather.gc.ca/rss/city/ns-19_e.xml")
         getRSSFeed(url!)
-        startUpdatingLocation()
+        updateCurrentLocation()
     }
 
     override func didReceiveMemoryWarning() {
@@ -51,7 +52,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // Customize the cell
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(self.weatherEntryCellIdentifier, forIndexPath: indexPath) as! WeatherEntryCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(MainViewController.WeatherEntryCellIdentifier, forIndexPath: indexPath) as! WeatherEntryCell
         updateWeatherEntryCell(cell, indexPath: indexPath)
         return cell
     }
@@ -73,7 +74,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == self.detailsViewSegueIdentifier {
+        if segue.identifier == MainViewController.DetailsViewSegueIdentifier {
             let detailsViewController = segue.destinationViewController as! DetailsViewController
             
             if let selectedWeatherEntryCell = sender as? WeatherEntryCell {
@@ -82,10 +83,20 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 detailsViewController.summaryText = selectedWeatherEntry.summary
             }
             
-        } else if segue.identifier == self.mapViewSegueIdendifier {
-            let mapViewController = segue.destinationViewController as! MapViewController
-            mapViewController.currentLocation = self.locationManager.location
+        } else if segue.identifier == MainViewController.MapViewSegueIdendifier {
+//            if let mapViewController = segue.destinationViewController as? MapViewController {
+//                mapViewController.currentLocation = self.locationManager.location
+//            }
+            if let navigationController = segue.destinationViewController as? UINavigationController {
+                if let mapViewController = navigationController.topViewController as? MapViewController {
+                    mapViewController.currentLocation = self.locationManager.location
+                }
+            }
         }
+    }
+    
+    @IBAction func unwindFromMapView(sender: UIStoryboardSegue) {
+        print("Unwinding from main!")
     }
     
     
@@ -96,10 +107,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         
         setCurrentWeatherEntry()
         
-        if feedParsedSuccessfully {
-            reloadTableView()
-        }
-        
         return feedParsedSuccessfully
     }
     
@@ -109,7 +116,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-    func startUpdatingLocation() {
+    func updateCurrentLocation() {
         self.locationManager.startUpdatingLocation()
     }
     
@@ -176,9 +183,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
-    }
-    
-    private func reloadTableView() {
     }
 
 }
