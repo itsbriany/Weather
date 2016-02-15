@@ -22,7 +22,11 @@
                                 <rect key="frame" x="0.0" y="692" width="414" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="zhv-YS-DUT"/>
-                                    <barButtonItem title="🌐" id="Rct-uk-JJB"/>
+                                    <barButtonItem title="🌐" id="Rct-uk-JJB">
+                                        <connections>
+                                            <segue destination="nzP-KE-0mb" kind="show" identifier="MapSegue" id="T8T-2n-6vu"/>
+                                        </connections>
+                                    </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="POk-RY-aqs"/>
                                 </items>
                             </toolbar>
@@ -34,16 +38,6 @@
                                 </constraints>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Date" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BqK-Ct-fwh">
-                                <rect key="frame" x="20" y="72" width="374" height="61"/>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="61" id="a7y-ly-ZgF"/>
-                                </constraints>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="132" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ysv-MP-mYk">
@@ -97,6 +91,16 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="7yz-9P-uN4"/>
                                 </connections>
                             </tableView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="City and Date" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BqK-Ct-fwh">
+                                <rect key="frame" x="20" y="72" width="374" height="61"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="61" id="a7y-ly-ZgF"/>
+                                </constraints>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -126,6 +130,38 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1653" y="-46"/>
+        </scene>
+        <!--Map View Controller-->
+        <scene sceneID="Ayj-k4-Av4">
+            <objects>
+                <viewController id="nzP-KE-0mb" customClass="MapViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="P3t-br-Qvj"/>
+                        <viewControllerLayoutGuide type="bottom" id="Vfx-Aj-lVj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8h2-fY-9yr">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XEg-ys-3zd">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="XEg-ys-3zd" firstAttribute="top" secondItem="8h2-fY-9yr" secondAttribute="top" id="1ns-RM-3gg"/>
+                            <constraint firstAttribute="trailing" secondItem="XEg-ys-3zd" secondAttribute="trailing" id="2fU-bf-sBl"/>
+                            <constraint firstItem="XEg-ys-3zd" firstAttribute="bottom" secondItem="Vfx-Aj-lVj" secondAttribute="top" id="fSC-DG-jMO"/>
+                            <constraint firstItem="XEg-ys-3zd" firstAttribute="leading" secondItem="8h2-fY-9yr" secondAttribute="leading" id="wXZ-KS-1aT"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="mapView" destination="XEg-ys-3zd" id="PIp-Lu-K7t"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iP4-UI-Xdj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1653" y="919"/>
         </scene>
         <!--Details-->
         <scene sceneID="kP1-yc-NgA">

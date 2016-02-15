@@ -50,7 +50,7 @@ class MainViewControllerTests: XCTestCase {
         // Given we have a date
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "EEEE, MMMM d"
-        let dateString = dateFormatter.stringFromDate(NSDate())
+        let dateString = "Halifax " + dateFormatter.stringFromDate(NSDate())
         
         // When the view loads, we should see the date format: <Day Name>, <Month Name> <Day> 
         XCTAssertEqual(self.controller.dateTextView.text, dateString)

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D31A48241C6FE4A40055B306 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A48231C6FE4A40055B306 /* MapViewController.swift */; };
+		D31A48261C6FEBA90055B306 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A48251C6FEBA90055B306 /* LocationManager.swift */; };
+		D31A48281C700AC20055B306 /* LocationManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31A48271C700AC20055B306 /* LocationManagerTests.swift */; };
+		D31A482B1C700BD30055B306 /* OttawaToHalifax.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D31A482A1C700BD30055B306 /* OttawaToHalifax.gpx */; };
+		D31A482D1C700F290055B306 /* Halifax.gpx in Resources */ = {isa = PBXBuildFile; fileRef = D31A482C1C700F290055B306 /* Halifax.gpx */; };
 		D33BF8ED1C6CE81900CAE18C /* FeedParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCB2EA1C6CE1A700E41848 /* FeedParser.swift */; };
 		D33BF8EF1C6CE8C000CAE18C /* FeedParserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3BCB2E81C6CE19300E41848 /* FeedParserTests.swift */; };
 		D33BF8F21C6CF8BF00CAE18C /* WeatherEntryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33BF8F11C6CF8BF00CAE18C /* WeatherEntryCell.swift */; };
@@ -44,6 +49,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		D31A48231C6FE4A40055B306 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		D31A48251C6FEBA90055B306 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		D31A48271C700AC20055B306 /* LocationManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManagerTests.swift; sourceTree = "<group>"; };
+		D31A482A1C700BD30055B306 /* OttawaToHalifax.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = OttawaToHalifax.gpx; sourceTree = "<group>"; };
+		D31A482C1C700F290055B306 /* Halifax.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Halifax.gpx; sourceTree = "<group>"; };
 		D33BF8F11C6CF8BF00CAE18C /* WeatherEntryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeatherEntryCell.swift; sourceTree = "<group>"; };
 		D3416FBD1C6BC15900C9D482 /* DetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		D34AE8D81C6BA44D00CE63D8 /* Weather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Weather.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -95,6 +105,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		D31A48291C700BB50055B306 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				D31A482A1C700BD30055B306 /* OttawaToHalifax.gpx */,
+				D31A482C1C700F290055B306 /* Halifax.gpx */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 		D33BF8F01C6CF89300CAE18C /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +127,7 @@
 			children = (
 				D34AE8DD1C6BA44D00CE63D8 /* MainViewController.swift */,
 				D3416FBD1C6BC15900C9D482 /* DetailsViewController.swift */,
+				D31A48231C6FE4A40055B306 /* MapViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -163,10 +183,12 @@
 		D34AE8F21C6BA44E00CE63D8 /* WeatherTests */ = {
 			isa = PBXGroup;
 			children = (
+				D31A48291C700BB50055B306 /* Assets */,
 				D34AE8F31C6BA44E00CE63D8 /* MainViewControllerTests.swift */,
 				D34AE8F51C6BA44E00CE63D8 /* Info.plist */,
 				D3BCB2E81C6CE19300E41848 /* FeedParserTests.swift */,
 				D37082E31C6E31F400CF8F63 /* ForecastAITests.swift */,
+				D31A48271C700AC20055B306 /* LocationManagerTests.swift */,
 			);
 			path = WeatherTests;
 			sourceTree = "<group>";
@@ -185,6 +207,7 @@
 			children = (
 				D3BCB2EA1C6CE1A700E41848 /* FeedParser.swift */,
 				D37082E11C6E31CD00CF8F63 /* ForecastAI.swift */,
+				D31A48251C6FEBA90055B306 /* LocationManager.swift */,
 			);
 			name = ModelControllers;
 			sourceTree = "<group>";
@@ -315,6 +338,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D31A482B1C700BD30055B306 /* OttawaToHalifax.gpx in Resources */,
+				D31A482D1C700F290055B306 /* Halifax.gpx in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,6 +360,8 @@
 				D33BF8F21C6CF8BF00CAE18C /* WeatherEntryCell.swift in Sources */,
 				D33BF8ED1C6CE81900CAE18C /* FeedParser.swift in Sources */,
 				D34AE8E41C6BA44D00CE63D8 /* Weather.xcdatamodeld in Sources */,
+				D31A48261C6FEBA90055B306 /* LocationManager.swift in Sources */,
+				D31A48241C6FE4A40055B306 /* MapViewController.swift in Sources */,
 				D34AE8DE1C6BA44D00CE63D8 /* MainViewController.swift in Sources */,
 				D37082E61C6E32A300CF8F63 /* WeatherCondition.swift in Sources */,
 				D37082E21C6E31CD00CF8F63 /* ForecastAI.swift in Sources */,
@@ -348,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D31A48281C700AC20055B306 /* LocationManagerTests.swift in Sources */,
 				D33BF8EF1C6CE8C000CAE18C /* FeedParserTests.swift in Sources */,
 				D34AE8F41C6BA44E00CE63D8 /* MainViewControllerTests.swift in Sources */,
 				D37082E41C6E31F400CF8F63 /* ForecastAITests.swift in Sources */,

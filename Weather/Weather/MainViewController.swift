@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MapKit
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
@@ -15,12 +16,16 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var dateTextView: UITextView!
     @IBOutlet weak var weatherEntryTableView: UITableView!
     
+    let geoCoder =  CLGeocoder()
     let weatherEntryCellIdentifier = "WeatherEntryCell"
     let detailsViewSegueIdentifier = "DetailsSegue"
+    let mapViewSegueIdendifier = "MapSegue"
     let dateTextViewFontSize: CGFloat = 18
     
+    var locationManager: LocationManager = LocationManager()
     var forecastAI: ForecastAI = ForecastAI()
     var parser: FeedParser!
+    
     
     
     // MARK: Initialization
@@ -30,6 +35,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let url = NSURL(string: "http://weather.gc.ca/rss/city/ns-19_e.xml")
         getRSSFeed(url!)
         setDateText()
+        setCurrentLocation()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,6 +68,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 detailsViewController.summaryText = selectedWeatherEntry.summary
             }
             
+        } else if segue.identifier == self.mapViewSegueIdendifier {
+            let mapViewController = segue.destinationViewController as! MapViewController
+            mapViewController.currentLocation = self.locationManager.location
         }
     }
     
@@ -131,5 +140,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return "X"
     }
     
+    private func setCurrentLocation() {
+        
+    }
 }
-
