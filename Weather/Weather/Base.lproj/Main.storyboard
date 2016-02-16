@@ -6,6 +6,78 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Cities-->
+        <scene sceneID="D8g-Bs-Lbj">
+            <objects>
+                <viewController id="2Qj-KA-Wba" customClass="CitiesViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="d67-70-zCU"/>
+                        <viewControllerLayoutGuide type="bottom" id="vF7-eX-z9C"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dHX-bI-PCM">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Vrj-q7-Mhs">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="672"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="CityCell" id="7mI-zf-WJj" customClass="CityCell" customModule="Weather" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="92" width="414" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="7mI-zf-WJj" id="Gas-iJ-Aez">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="City Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FpX-IE-lK0">
+                                                    <rect key="frame" x="167" y="11" width="80" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="FpX-IE-lK0" firstAttribute="centerY" secondItem="Gas-iJ-Aez" secondAttribute="centerY" id="WMS-Jc-aXk"/>
+                                                <constraint firstItem="FpX-IE-lK0" firstAttribute="centerX" secondItem="Gas-iJ-Aez" secondAttribute="centerX" id="ylh-PH-VEE"/>
+                                                <constraint firstItem="FpX-IE-lK0" firstAttribute="top" secondItem="Gas-iJ-Aez" secondAttribute="topMargin" constant="3" id="z8W-2z-fdM"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="cityLabel" destination="FpX-IE-lK0" id="Omy-qh-Y8v"/>
+                                            <segue destination="6Ut-hq-ez1" kind="unwind" unwindAction="unwindBySelectingCity:" id="wZJ-jj-vxK"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="2Qj-KA-Wba" id="CBJ-yo-eYf"/>
+                                    <outlet property="delegate" destination="2Qj-KA-Wba" id="8AI-E4-NFC"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="Vrj-q7-Mhs" firstAttribute="leading" secondItem="dHX-bI-PCM" secondAttribute="leading" id="EP2-6p-4jx"/>
+                            <constraint firstItem="Vrj-q7-Mhs" firstAttribute="top" secondItem="dHX-bI-PCM" secondAttribute="top" id="H4g-Xi-VGy"/>
+                            <constraint firstItem="vF7-eX-z9C" firstAttribute="top" secondItem="Vrj-q7-Mhs" secondAttribute="bottom" constant="64" id="KhI-9m-f5n"/>
+                            <constraint firstAttribute="trailing" secondItem="Vrj-q7-Mhs" secondAttribute="trailing" id="XIk-Aj-SEY"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Cities" id="uvi-uY-h5W">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="j0R-r2-ekW">
+                            <connections>
+                                <segue destination="6Ut-hq-ez1" kind="unwind" unwindAction="unwindToMainViewController:" id="4ep-dQ-uM0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="citiesTableView" destination="Vrj-q7-Mhs" id="fcp-OF-4JW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="VT1-pJ-ilf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="6Ut-hq-ez1" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2851" y="-980"/>
+        </scene>
         <!--Home-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -93,9 +165,9 @@
                                 <rect key="frame" x="0.0" y="692" width="414" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="zhv-YS-DUT"/>
-                                    <barButtonItem title="🌐" id="Rct-uk-JJB">
+                                    <barButtonItem title="Local Weather" id="aqU-pi-QuZ">
                                         <connections>
-                                            <segue destination="cxB-9Q-gV3" kind="presentation" identifier="MapSegue" id="hyW-KW-oP4"/>
+                                            <action selector="updateToLocalWeather:" destination="BYZ-38-t0r" id="z5J-u6-zwI"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="POk-RY-aqs"/>
@@ -119,7 +191,18 @@
                             <constraint firstAttribute="trailing" secondItem="Zlx-zq-yRg" secondAttribute="trailing" id="vkw-T6-4a9"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Home" id="Lrl-J3-pIh"/>
+                    <navigationItem key="navigationItem" title="Home" id="Lrl-J3-pIh">
+                        <barButtonItem key="leftBarButtonItem" title="🌐" id="ob4-3o-YD5">
+                            <connections>
+                                <segue destination="cxB-9Q-gV3" kind="presentation" identifier="MapSegue" id="I2U-vW-CAy"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Cities" id="M38-Re-1cJ">
+                            <connections>
+                                <segue destination="qOc-Tm-XaC" kind="presentation" id="7Ds-eb-rMG"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
                         <outlet property="currrentWeatherEntryTextView" destination="vFP-7t-vdv" id="F6i-j3-DYf"/>
@@ -129,7 +212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1653" y="-46"/>
+            <point key="canvasLocation" x="1649" y="-46"/>
         </scene>
         <!--Location-->
         <scene sceneID="9Z4-S0-b7f">
@@ -153,7 +236,7 @@
                     <navigationItem key="navigationItem" title="Location" id="UKe-zd-rjh">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="6oT-o4-OYz">
                             <connections>
-                                <segue destination="krG-0Z-Tsg" kind="unwind" unwindAction="unwindFromMapView:" id="svJ-jM-fXc"/>
+                                <segue destination="krG-0Z-Tsg" kind="unwind" unwindAction="unwindToMainViewController:" id="a13-3y-0U9"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -165,7 +248,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f0c-h8-j0Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="krG-0Z-Tsg" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2279" y="894"/>
+            <point key="canvasLocation" x="2375" y="903"/>
         </scene>
         <!--Details-->
         <scene sceneID="kP1-yc-NgA">
@@ -241,7 +324,25 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eaF-AH-ecE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1653" y="894"/>
+            <point key="canvasLocation" x="1649" y="903"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ctD-pM-d34">
+            <objects>
+                <navigationController storyboardIdentifier="CitiesViewNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="qOc-Tm-XaC" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="1me-uX-F1t">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="2Qj-KA-Wba" kind="relationship" relationship="rootViewController" id="GPf-P2-SBh"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nRZ-V4-cH9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2327" y="-980"/>
         </scene>
     </scenes>
 </document>

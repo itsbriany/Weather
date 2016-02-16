@@ -28,9 +28,16 @@ class WeatherUITests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testThatCitiesExist() {
+        let app = XCUIApplication()
+        app.navigationBars["Home"].buttons["Cities"].tap()
+        
+        let tablesQuery2 = app.tables
+        let tablesQuery = tablesQuery2
+        tablesQuery.staticTexts["Suffield"].swipeUp()
+        tablesQuery2.cells.containingType(.StaticText, identifier:"Lynn Lake").childrenMatchingType(.StaticText).matchingIdentifier("Lynn Lake").elementBoundByIndex(0).swipeUp()
+        tablesQuery.staticTexts["Richer"].tap()
+        app.navigationBars["Cities"].childrenMatchingType(.Button).matchingIdentifier("Back").elementBoundByIndex(0).tap()
     }
     
 }

@@ -16,6 +16,10 @@ enum CSVParseException: ErrorType {
 }
 
 class CSVParser {
+    
+    static let FeedEntriesFile = "feeds.csv"
+    
+    // MARK: Properties
     var feedEntries: [String : FeedEntry]!
     var feedData: String?
     
@@ -27,12 +31,16 @@ class CSVParser {
             try loadFeedEntries()
         } catch CSVParseException.InvalidEntryFormat {
             print("Found an invalid entry format")
+            exit(EXIT_FAILURE)
         } catch CSVParseException.InvalidURL {
             print("Found an invalid URL")
+            exit(EXIT_FAILURE)
         } catch CSVParseException.MissingData {
             print("The CSV file is empty!")
+            exit(EXIT_FAILURE)
         } catch {
             print("Something went wrong when loading CSV entries!")
+            exit(EXIT_FAILURE)
         }
     }
     
@@ -77,6 +85,7 @@ class CSVParser {
                     }
                     throw CSVParseException.InvalidURL
                 }
+                print("Invalid FeedEntry string: " + feedEntryString)
                 throw CSVParseException.InvalidEntryFormat
             }
             return

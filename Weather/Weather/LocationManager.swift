@@ -58,6 +58,19 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         self.allowReveseGeolocationLookup = true
     }
     
+    func extractFeedEntryFromGeolocation() -> FeedEntry {
+        let csvParser = CSVParser(filePath: CSVParser.FeedEntriesFile)
+        let city = getFoundCity()
+        do {
+            if let feedEntry: FeedEntry? = try csvParser.getEntryWithCity(city) {
+                return feedEntry!
+            }
+        } catch {
+            return FeedEntry()
+        }
+        return FeedEntry()
+    }
+    
     
     // MARK: Private Interface
     private func authenticateGeolocationServices() {
@@ -91,5 +104,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             self.allowReveseGeolocationLookup = false
             updateCurrentPlacemark(callback)
         }
+    }
+    
+    private func getFoundCity() -> String {
+        if self.currentPlacemark != nil {
+            return self.currentPlacemark!.locality!
+        }
+        return ""
     }
 }

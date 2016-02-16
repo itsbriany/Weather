@@ -40,6 +40,15 @@ class LocationManagerTests: XCTestCase, CLLocationManagerDelegate {
             XCTAssertNil(error, "Error")
         })
     }
+    
+    func testThatFeedEntryCanBeExtractedFromCurrentGeolocation() {
+        // TODO: This likely needs to be tested asynchronously
+        let feedEntry = self.locationManager.extractFeedEntryFromGeolocation()
+        XCTAssertNotNil(feedEntry)
+        XCTAssertEqual(feedEntry.url.absoluteString, "http://weather.gc.ca/rss/city/ns-19_e.xml")
+        XCTAssertEqual(feedEntry.city, "Halifax")
+        XCTAssertEqual(feedEntry.province, "Nova Scotia")
+    }
 
     
     // MARK: CLLocationManagerDelegate Implementation

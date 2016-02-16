@@ -50,7 +50,7 @@ class MainViewControllerTests: XCTestCase, CLLocationManagerDelegate {
         XCTAssert(self.controller.getRSSFeed(url!))
         
         // The table view should display at least 7 rows
-        XCTAssertGreaterThanOrEqual(self.controller.weatherEntryTableView.accessibilityElementCount(), 7)
+        XCTAssertGreaterThanOrEqual(self.controller.weatherEntryTableView.numberOfRowsInSection(0), 7)
         
         // The current conditions should not dispay in the table
         for cell in self.controller.weatherEntryTableView.visibleCells {
@@ -73,10 +73,12 @@ class MainViewControllerTests: XCTestCase, CLLocationManagerDelegate {
         })
     }
     
+    // TODO: Still need to test segues
+    
     
     // MARK: CLLocationManagerDelegate Implementation
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        self.controller.updateDateText(manager, didUpdateLocations: locations, callback: { error -> Void in
+        self.controller.updateDateTextWhenLocationIsUpdated(manager, didUpdateLocations: locations, callback: { error -> Void in
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "EEEE, MMMM d"
             let dateString = "Halifax " + dateFormatter.stringFromDate(NSDate())

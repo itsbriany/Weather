@@ -11,9 +11,11 @@ import MapKit
 
 class MainViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, CLLocationManagerDelegate {
     
+    // MARK: Identifiers
     static let WeatherEntryCellIdentifier = "WeatherEntryCell"
     static let DetailsViewSegueIdentifier = "DetailsSegue"
     static let MapViewSegueIdendifier = "MapSegue"
+    
     
     // MARK: Properties
     @IBOutlet weak var currrentWeatherEntryTextView: UITextView!
@@ -26,7 +28,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     var locationManager: LocationManager = LocationManager()
     var forecastAI: ForecastAI = ForecastAI()
     var parser: FeedParser!
-    
+    var currentFeedEntry: FeedEntry?
     
     
     // MARK: Initialization
@@ -60,7 +62,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: CLLocationManagerDelegate Implementation
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        updateDateText(manager, didUpdateLocations: locations, callback: { error -> Void in
+        updateDateTextWhenLocationIsUpdated(manager, didUpdateLocations: locations, callback: { error -> Void in
             if error != nil {
                 print("CLLocationManagerDelegate didUpdateLocations error: " + error!.description)
                 return
@@ -98,13 +100,27 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
-    @IBAction func unwindFromMapView(sender: UIStoryboardSegue) {
-        // Update the current geolocation
-        self.locationManager.prepareForReverseGeolocationLookup()
+    
+    // MARK: User Interactions
+    @IBAction func unwindToMainViewController(sender: UIStoryboardSegue) {
+        print("Unwind by going back")
         // Fetch another RSSFeed
         // Reload the weatherTable
     }
     
+    @IBAction func unwindBySelectingCity(sender: UIStoryboardSegue) {
+        if self.currentFeedEntry != nil {
+            getRSSFeed(self.currentFeedEntry!.url)
+        }
+    }
+    
+    @IBAction func updateToLocalWeather(sender: UIBarButtonItem) {
+        self.locationManager.prepareForReverseGeolocationLookup()
+        // Get the url based off the city found
+        
+        
+        
+    }
     
     // MARK: Interface
     func getRSSFeed(url: NSURL) -> Bool {
@@ -132,7 +148,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return dateString
     }
     
-    func updateDateText(manager: CLLocationManager, didUpdateLocations locations: [CLLocation], callback: (error: NSError?) -> Void) {
+    func updateDateTextWhenLocationIsUpdated(manager: CLLocationManager, didUpdateLocations locations: [CLLocation], callback: (error: NSError?) -> Void) {
         self.locationManager.handleLocationUpdate(manager, locations: locations, callback: {error -> Void in
             if error != nil {
                 print("Error handling location update: " + error!.description)
@@ -179,6 +195,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     private func setCurrentWeatherEntry() {
         let weatherEntryList = self.parser.entriesList
+        
+        // TODO: The entries list may be a different size after loading another feed entry
         for entryIndex in 0 ..< weatherEntryList.count {
             let entry = weatherEntryList[entryIndex]
             if let entryTitle = entry.title {
@@ -188,6 +206,22 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 }
             }
         }
+        
+        updateDateText()
+        refreshWeatherEntryTable()
     }
+    
+    private func refreshWeatherEntryTable() {
+        self.weatherEntryTableView.reloadData()
+    }
+    
+    private func updateDateText() {
+        if self.currentFeedEntry != nil {
+            let dateText = self.getDateText()
+            self.dateTextView.text = self.currentFeedEntry!.city + " " + dateText
+        }
+    }
+    
+    
 
 }

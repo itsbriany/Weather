@@ -18,6 +18,8 @@ class MapViewController: UIViewController, UINavigationControllerDelegate {
     let regionRadius: CLLocationDistance = 1000
     var currentLocation: CLLocation?
     
+    
+    // TODO App crashes when geolocation services are off
     override func viewDidLoad() {
         super.viewDidLoad()
         centerMapOnLocation(self.currentLocation!)
