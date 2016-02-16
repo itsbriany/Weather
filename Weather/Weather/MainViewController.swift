@@ -63,11 +63,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: CLLocationManagerDelegate Implementation
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         updateDateTextWhenLocationIsUpdated(manager, didUpdateLocations: locations, callback: { error -> Void in
-            if error != nil {
-                print("CLLocationManagerDelegate didUpdateLocations error: " + error!.description)
-                return
-            }
-            print("Location updated to " + self.locationManager.currentPlacemark!.locality!)
+            self.onLocationUpdate(error)
         })
     }
     
@@ -83,20 +79,9 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == MainViewController.DetailsViewSegueIdentifier {
-            let detailsViewController = segue.destinationViewController as! DetailsViewController
-            
-            if let selectedWeatherEntryCell = sender as? WeatherEntryCell {
-                let indexPath = self.weatherEntryTableView.indexPathForCell(selectedWeatherEntryCell)
-                let selectedWeatherEntry = self.parser.entriesList[indexPath!.row]
-                detailsViewController.summaryText = selectedWeatherEntry.summary
-            }
-            
+            prepareDetailsViewController(segue, sender: sender)
         } else if segue.identifier == MainViewController.MapViewSegueIdendifier {
-            if let navigationController = segue.destinationViewController as? UINavigationController {
-                if let mapViewController = navigationController.topViewController as? MapViewController {
-                    mapViewController.currentLocation = self.locationManager.location
-                }
-            }
+            prepareMapViewController(segue, sender: sender)
         }
     }
     
@@ -116,18 +101,15 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     @IBAction func updateToLocalWeather(sender: UIBarButtonItem) {
         self.locationManager.prepareForReverseGeolocationLookup()
-        // Get the url based off the city found
-        
-        
-        
     }
+    
     
     // MARK: Interface
     func getRSSFeed(url: NSURL) -> Bool {
         self.parser = FeedParser(url: url)
         let feedParsedSuccessfully = self.parser.parseFeed()
         
-        setCurrentWeatherEntry()
+        updateView()
         
         return feedParsedSuccessfully
     }
@@ -193,7 +175,24 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         return "X"
     }
     
-    private func setCurrentWeatherEntry() {
+    private func prepareDetailsViewController(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let controller = segue.destinationViewController as! DetailsViewController
+        if let selectedWeatherEntryCell = sender as? WeatherEntryCell {
+            let indexPath = self.weatherEntryTableView.indexPathForCell(selectedWeatherEntryCell)
+            let selectedWeatherEntry = self.parser.entriesList[indexPath!.row]
+            controller.summaryText = selectedWeatherEntry.summary
+        }
+    }
+    
+    private func prepareMapViewController(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let navigationController = segue.destinationViewController as? UINavigationController {
+            if let mapViewController = navigationController.topViewController as? MapViewController {
+                mapViewController.currentLocation = self.locationManager.location
+            }
+        }
+    }
+    
+    private func updateView() {
         let weatherEntryList = self.parser.entriesList
         
         // TODO: The entries list may be a different size after loading another feed entry
@@ -223,5 +222,17 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     
-
+    // MARK: Callbacks
+    private func onLocationUpdate(error: NSError?) {
+        if error != nil {
+            print("CLLocationManagerDelegate didUpdateLocations error: " + error!.description)
+            return
+        }
+        print("Location updated to " + self.locationManager.currentPlacemark!.locality!)
+        self.currentFeedEntry = self.locationManager.extractFeedEntryFromGeolocation()
+        if let url = self.currentFeedEntry!.url {
+            getRSSFeed(url)
+        }
+        updateView()
+    }
 }

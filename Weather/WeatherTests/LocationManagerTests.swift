@@ -13,7 +13,7 @@ import MapKit
 class LocationManagerTests: XCTestCase, CLLocationManagerDelegate {
 
     var locationManager: LocationManager!
-    var testGeoLocationCoordinatesReadyExpectation: XCTestExpectation!
+    var didUpdateLocationExpectation: XCTestExpectation!
     
     override func setUp() {
         super.setUp()
@@ -30,34 +30,24 @@ class LocationManagerTests: XCTestCase, CLLocationManagerDelegate {
         XCTAssertEqual(CLLocationManager.authorizationStatus(), CLAuthorizationStatus.AuthorizedWhenInUse)
         
         // When an async reverse geolocation lookup is performed
-        self.testGeoLocationCoordinatesReadyExpectation = expectationWithDescription("Location manager should have its current placemark set")
+        self.didUpdateLocationExpectation = expectationWithDescription("Location manager should have its current placemark set")
         self.locationManager.startUpdatingLocation()
         
         // We should know the city representing our current location
         // (This will be called in the didUpdateLocations delegate)
         
-        waitForExpectationsWithTimeout(5, handler: { error in
+        waitForExpectationsWithTimeout(3, handler: { error in
             XCTAssertNil(error, "Error")
         })
-    }
-    
-    func testThatFeedEntryCanBeExtractedFromCurrentGeolocation() {
-        // TODO: This likely needs to be tested asynchronously
-        let feedEntry = self.locationManager.extractFeedEntryFromGeolocation()
-        XCTAssertNotNil(feedEntry)
-        XCTAssertEqual(feedEntry.url.absoluteString, "http://weather.gc.ca/rss/city/ns-19_e.xml")
-        XCTAssertEqual(feedEntry.city, "Halifax")
-        XCTAssertEqual(feedEntry.province, "Nova Scotia")
     }
 
     
     // MARK: CLLocationManagerDelegate Implementation
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         self.locationManager.handleLocationUpdate(manager, locations: locations, callback: { error -> Void in
-            XCTAssertNil(error, "Placemark Error")
-            XCTAssertNotNil(self.locationManager.location)
-            XCTAssertEqual(self.locationManager.currentPlacemark?.locality, "Halifax")
-            self.testGeoLocationCoordinatesReadyExpectation.fulfill()
+            self.testGeolocationCoordinatesCallback(error)
+            self.testThatFeedEntryCanBeExtractedFromCurrentGeolocationCallback(error)
+            self.didUpdateLocationExpectation.fulfill()
         })
     }
     
@@ -65,5 +55,22 @@ class LocationManagerTests: XCTestCase, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    }
+    
+    
+    // MARK: Asynch callbacks
+    private func testGeolocationCoordinatesCallback(error: NSError?) {
+        XCTAssertNil(error, "Placemark Error")
+        XCTAssertNotNil(self.locationManager.location)
+        XCTAssertEqual(self.locationManager.currentPlacemark?.locality, "Halifax")
+    }
+    
+    private func testThatFeedEntryCanBeExtractedFromCurrentGeolocationCallback(error: NSError?) {
+        let feedEntry = self.locationManager.extractFeedEntryFromGeolocation()
+        XCTAssertNil(error, "Placemark error")
+        XCTAssertNotNil(feedEntry)
+        XCTAssertEqual(feedEntry.url.absoluteString, "http://weather.gc.ca/rss/city/ns-19_e.xml")
+        XCTAssertEqual(feedEntry.city, "Halifax")
+        XCTAssertEqual(feedEntry.province, "Nova Scotia")
     }
 }

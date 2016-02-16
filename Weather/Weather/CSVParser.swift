@@ -46,16 +46,16 @@ class CSVParser {
     
     
     // MARK: Interface
-    func getEntryWithCity(city: String) throws -> FeedEntry {
+    func getEntryWithCity(city: String) -> FeedEntry {
         if feedEntries.isEmpty {
-            throw CSVParseException.MissingData
+            return FeedEntry()
         }
        
         if let entry = self.feedEntries[city.lowercaseString] {
             return entry
         }
         
-        throw CSVParseException.NoSuchFeedEntry
+        return FeedEntry()
     }
     
     

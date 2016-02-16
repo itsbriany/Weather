@@ -24,4 +24,8 @@ class FeedEntry {
         self.city = city
         self.province = province
     }
+    
+    func isEmpty() -> Bool {
+        return self.url.host == nil && !self.city.isEmpty && !self.province.isEmpty
+    }
 }

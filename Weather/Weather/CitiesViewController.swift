@@ -60,26 +60,19 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     }
     
     private func prepareSegueForMainViewController(segue: UIStoryboardSegue) {
-        do {
-            
-            let mainViewController = segue.destinationViewController as! MainViewController
-            
-            let selectedIndexPath = self.citiesTableView.indexPathForSelectedRow
-            let selctedCell = self.citiesTableView.cellForRowAtIndexPath(selectedIndexPath!) as! CityCell
-            
-            
-            self.currentFeedEntry = try self.csvParser.getEntryWithCity(selctedCell.cityLabel!.text!)
-            
+        
+        let mainViewController = segue.destinationViewController as! MainViewController
+        let selectedIndexPath = self.citiesTableView.indexPathForSelectedRow
+        let selctedCell = self.citiesTableView.cellForRowAtIndexPath(selectedIndexPath!) as! CityCell
+        
+        self.currentFeedEntry = self.csvParser.getEntryWithCity(selctedCell.cityLabel!.text!)
+        
+        if !self.currentFeedEntry.isEmpty() {
             if let feedEntry = self.currentFeedEntry {
                 mainViewController.currentFeedEntry = feedEntry
             }
-            
-            print("CitiesViewController: Prepared for segue!")
-
-        } catch CSVParseException.NoSuchFeedEntry {
-            print("Could not find feed entry")
-        } catch {
-            print("CitiesViewController: Something went wrong when transitioning to MainViewController!")
         }
+        
+        print("CitiesViewController: Prepared for segue!")
     }
 }

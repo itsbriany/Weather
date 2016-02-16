@@ -61,13 +61,11 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func extractFeedEntryFromGeolocation() -> FeedEntry {
         let csvParser = CSVParser(filePath: CSVParser.FeedEntriesFile)
         let city = getFoundCity()
-        do {
-            if let feedEntry: FeedEntry? = try csvParser.getEntryWithCity(city) {
-                return feedEntry!
-            }
-        } catch {
-            return FeedEntry()
+      
+        if let feedEntry: FeedEntry? = csvParser.getEntryWithCity(city) {
+            return feedEntry!
         }
+        
         return FeedEntry()
     }
     
