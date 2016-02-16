@@ -17,9 +17,16 @@ class MainViewControllerTests: XCTestCase, CLLocationManagerDelegate {
     
     override func setUp() {
         super.setUp()
+        
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        self.controller = storyboard.instantiateViewControllerWithIdentifier("MainViewController") as! MainViewController
-        let _ = controller.view
+        let navigationController = storyboard.instantiateViewControllerWithIdentifier("MainViewNavigationController") as! UINavigationController
+        self.controller = navigationController.topViewController as! MainViewController
+        
+        // Test and load the view at the same time
+        XCTAssertNotNil(navigationController.view, "MainViewNavigationController's view is nil")
+        XCTAssertNotNil(self.controller.view, "MainViewController's view is nil")
+        
+        // Let this test class implement CLLocationManagerDelegate
         self.controller.locationManager.locationManager.delegate = self
     }
     

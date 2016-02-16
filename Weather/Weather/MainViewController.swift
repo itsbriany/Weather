@@ -60,7 +60,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     // MARK: CLLocationManagerDelegate Implementation
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        updateDateText(manager, didUpdateLocations: locations, callback: { error -> Void in })
+        updateDateText(manager, didUpdateLocations: locations, callback: { error -> Void in
+            if error != nil {
+                print("CLLocationManagerDelegate didUpdateLocations error: " + error!.description)
+                return
+            }
+            print("Location updated to " + self.locationManager.currentPlacemark!.locality!)
+        })
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
@@ -84,9 +90,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             }
             
         } else if segue.identifier == MainViewController.MapViewSegueIdendifier {
-//            if let mapViewController = segue.destinationViewController as? MapViewController {
-//                mapViewController.currentLocation = self.locationManager.location
-//            }
             if let navigationController = segue.destinationViewController as? UINavigationController {
                 if let mapViewController = navigationController.topViewController as? MapViewController {
                     mapViewController.currentLocation = self.locationManager.location
@@ -96,7 +99,10 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     }
     
     @IBAction func unwindFromMapView(sender: UIStoryboardSegue) {
-        print("Unwinding from main!")
+        // Update the current geolocation
+        self.locationManager.prepareForReverseGeolocationLookup()
+        // Fetch another RSSFeed
+        // Reload the weatherTable
     }
     
     
@@ -114,7 +120,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         cell.titleTextView.text = self.parser.entriesList[indexPath.row].title
         cell.weatherEmojiLabel.text = extractWeatherConditionEmoji(cell, indexPath: indexPath)
     }
-    
     
     func updateCurrentLocation() {
         self.locationManager.startUpdatingLocation()

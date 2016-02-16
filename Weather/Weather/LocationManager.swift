@@ -14,7 +14,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     // MARK: Properties
     let locationManager = CLLocationManager()
     
-    var hasFoundFirstLocation = false
+    var allowReveseGeolocationLookup = true
     var location: CLLocation?
     var currentPlacemark: CLPlacemark?
     
@@ -47,14 +47,15 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     // MARK: Interface
     func handleLocationUpdate(manager: CLLocationManager, locations: [CLLocation], callback: (error: NSError?) -> Void) {
         self.location = CLLocation(latitude: locations[0].coordinate.latitude, longitude: locations[0].coordinate.longitude)
-        if !self.hasFoundFirstLocation {
-            self.hasFoundFirstLocation = true
-            updateCurrentPlacemark(callback)
-        }
+        tryReverseGeolocationLookup(callback)
     }
     
     func startUpdatingLocation() {
         self.locationManager.startUpdatingLocation()
+    }
+    
+    func prepareForReverseGeolocationLookup() {
+        self.allowReveseGeolocationLookup = true
     }
     
     
@@ -82,6 +83,13 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
                 print("Something went wrong when requesting geolocation placemarks")
                 callback(error: error)
             })
+        }
+    }
+    
+    private func tryReverseGeolocationLookup(callback: (error: NSError?) -> Void) {
+        if self.allowReveseGeolocationLookup {
+            self.allowReveseGeolocationLookup = false
+            updateCurrentPlacemark(callback)
         }
     }
 }
