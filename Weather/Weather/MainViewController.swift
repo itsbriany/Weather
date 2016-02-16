@@ -18,7 +18,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     
     // MARK: Properties
-    @IBOutlet weak var currrentWeatherEntryTextView: UITextView!
+   // @IBOutlet weak var currrentWeatherEntryTextView: UITextView!
+    @IBOutlet weak var currentWeatherEntryLabel: UILabel!
     @IBOutlet weak var dateTextView: UITextView!
     @IBOutlet weak var weatherEntryTableView: UITableView!
     
@@ -200,7 +201,7 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let entry = weatherEntryList[entryIndex]
             if let entryTitle = entry.title {
                 if entryTitle.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier) {
-                    self.currrentWeatherEntryTextView.text = entryTitle + ForecastAI.DegreesUnit
+                    self.currentWeatherEntryLabel.text = entryTitle + ForecastAI.DegreesUnit
                     self.parser.entriesList.removeAtIndex(entryIndex)
                 }
             }

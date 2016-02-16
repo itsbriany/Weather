@@ -61,7 +61,7 @@ class MainViewControllerTests: XCTestCase, CLLocationManagerDelegate {
         }
         
         // The current weather condition should display
-        XCTAssert(self.controller.currrentWeatherEntryTextView.text.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier))
+        XCTAssert(self.controller.currentWeatherEntryLabel.text!.lowercaseString.containsString(ForecastAI.CurrentWeatherConditionIdentifier))
     }
     
     func testCurrentDate() {
@@ -73,7 +73,7 @@ class MainViewControllerTests: XCTestCase, CLLocationManagerDelegate {
         })
     }
     
-    // TODO: Still need to test segues
+    // TODO: HOW DO YOU TEST SEGUES??
     
     
     // MARK: CLLocationManagerDelegate Implementation
