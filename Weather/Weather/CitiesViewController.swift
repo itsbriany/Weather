@@ -18,52 +18,76 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
     
     var csvParser: CSVParser!
     var feedEntries: [FeedEntry]!
-    var currentFeedEntry: FeedEntry!
+    weak var currentFeedEntry: FeedEntry?
+    var searchActive: Bool = false
+    var filteredFeedEntries: [FeedEntry]!
     
     // MARK: Initialization
     override func viewDidLoad() {
         super.viewDidLoad()
         self.searchBar.delegate = self
+        self.filteredFeedEntries = [FeedEntry]()
         self.csvParser = CSVParser(filePath: "feeds.csv")
         self.feedEntries = [FeedEntry]()
         fetchEntries()
     }
     
-    // MARK: Interface
-    func searchFor(city: String) {
-        // TODO: Only visible cells can be queried
-        // Need to query the feedEntries
-        
-        var foundEntries = collectFeedEntriesContainingCity(city)
-        
-        for var section = 0; section < self.citiesTableView.numberOfSections; section++ {
-            for var row = 0; row < self.citiesTableView.numberOfRowsInSection(section); row++ {
-                let indexPath = NSIndexPath(forRow: row, inSection: section)
-                if let cell = self.citiesTableView.cellForRowAtIndexPath(indexPath) as? CityCell {
-                    if !foundEntries.isEmpty {
-                        cell.cityLabel.text = foundEntries.popLast()?.city
-                    }
-                }
-            }
-        }
-    }
-    
     // MARK: UISearchBarDelegate Implementation
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-        searchFor(searchText)
+        //searchFor(searchText)
+        
+        self.filteredFeedEntries = self.feedEntries.filter({feedEntry -> Bool in
+            let tmp: NSString = feedEntry.city
+            let range = tmp.rangeOfString(searchText, options: NSStringCompareOptions.CaseInsensitiveSearch)
+            return range.location != NSNotFound
+        })
+        
+        if(self.filteredFeedEntries.count == 0){
+            self.searchActive = false;
+        } else {
+            self.searchActive = true;
+        }
+        
+        self.citiesTableView.reloadData()
+        
     }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        self.searchActive = true
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        self.searchActive = false
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        self.searchActive = false
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        self.searchActive = false
+    }
+    
+    
     
     
     // MARK: UITableViewDataSource Implementation
     // How many cells?
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if self.searchActive {
+            return self.filteredFeedEntries.count
+        }
         return self.feedEntries.count
     }
     
     // Customize the cell
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(CitiesViewController.CityCellIdentifier, forIndexPath: indexPath) as! CityCell
-        loadCityIntoCityCell(cell, indexPath: indexPath)
+        if self.searchActive {
+            loadCityIntoCityCell(cell, indexPath: indexPath, feedEntries: self.filteredFeedEntries)
+            return cell
+        }
+        loadCityIntoCityCell(cell, indexPath: indexPath, feedEntries: self.feedEntries)
         return cell
     }
     
@@ -92,8 +116,8 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
         }
     }
     
-    private func loadCityIntoCityCell(cell: CityCell, indexPath: NSIndexPath) {
-        cell.cityLabel.text = self.feedEntries[indexPath.row].city
+    private func loadCityIntoCityCell(cell: CityCell, indexPath: NSIndexPath, feedEntries: [FeedEntry]) {
+        cell.cityLabel.text = feedEntries[indexPath.row].city
     }
     
     private func prepareSegueForMainViewController(segue: UIStoryboardSegue) {
@@ -105,7 +129,7 @@ class CitiesViewController: UIViewController, UITableViewDelegate, UITableViewDa
             
             self.currentFeedEntry = self.csvParser.getEntryWithCity(selctedCell.cityLabel!.text!)
             
-            if !self.currentFeedEntry.isEmpty() {
+            if !self.currentFeedEntry!.isEmpty() {
                 if let feedEntry = self.currentFeedEntry {
                     mainViewController.currentFeedEntry = feedEntry
                 }

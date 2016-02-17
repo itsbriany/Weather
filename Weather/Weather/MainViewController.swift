@@ -14,11 +14,8 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     // MARK: Identifiers
     static let WeatherEntryCellIdentifier = "WeatherEntryCell"
     static let DetailsViewSegueIdentifier = "DetailsSegue"
-    static let MapViewSegueIdendifier = "MapSegue"
-    
     
     // MARK: Properties
-   // @IBOutlet weak var currrentWeatherEntryTextView: UITextView!
     @IBOutlet weak var currentWeatherEntryLabel: UILabel!
     @IBOutlet weak var dateTextView: UITextView!
     @IBOutlet weak var weatherEntryTableView: UITableView!
@@ -81,17 +78,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == MainViewController.DetailsViewSegueIdentifier {
             prepareDetailsViewController(segue, sender: sender)
-        } else if segue.identifier == MainViewController.MapViewSegueIdendifier {
-            prepareMapViewController(segue, sender: sender)
         }
     }
     
     
     // MARK: User Interactions
     @IBAction func unwindToMainViewController(sender: UIStoryboardSegue) {
-        print("Unwind by going back")
-        // Fetch another RSSFeed
-        // Reload the weatherTable
     }
     
     @IBAction func unwindBySelectingCity(sender: UIStoryboardSegue) {
@@ -182,14 +174,6 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
             let indexPath = self.weatherEntryTableView.indexPathForCell(selectedWeatherEntryCell)
             let selectedWeatherEntry = self.parser.entriesList[indexPath!.row]
             controller.summaryText = selectedWeatherEntry.summary
-        }
-    }
-    
-    private func prepareMapViewController(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if let navigationController = segue.destinationViewController as? UINavigationController {
-            if let mapViewController = navigationController.topViewController as? MapViewController {
-                mapViewController.currentLocation = self.locationManager.location
-            }
         }
     }
     

@@ -67,16 +67,6 @@ class CitiesViewControllerTests: XCTestCase {
     func testThatSearchBarExists() {
         XCTAssertNotNil(self.controller.searchBar)
     }
-    
-//    func testThatCityCanBeSearched() {
-//        let city = "hAlIfax"
-//        let targetLabel = "Halifax"
-//        self.controller.searchFor(city)
-//        let expectedReuseIdentifier = CitiesViewController.CityCellIdentifier
-//        let cell = self.controller.citiesTableView.dequeueReusableCellWithIdentifier(expectedReuseIdentifier) as! CityCell
-//        XCTAssertNotNil(cell)
-//        XCTAssertEqual(cell.cityLabel, targetLabel)
-//    }
 
     func testThatSearchBarHasDelegate() {
         XCTAssertNotNil(self.controller.searchBar.delegate)
