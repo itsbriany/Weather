@@ -19,14 +19,19 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBOutlet weak var currentWeatherEntryLabel: UILabel!
     @IBOutlet weak var dateTextView: UITextView!
     @IBOutlet weak var weatherEntryTableView: UITableView!
+    @IBOutlet weak var geolocationActivityIndicator: UIActivityIndicatorView!
     
     let geoCoder =  CLGeocoder()
     let dateTextViewFontSize: CGFloat = 18
+    let loadingGeolocationText = "Fetching your location..."
+    let locationNotSupportedText = " weather is not supported"
+    let failToFetchLocationText = "Failed to fetch location :("
     
     var locationManager: LocationManager = LocationManager()
     var forecastAI: ForecastAI = ForecastAI()
     var parser: FeedParser!
     var currentFeedEntry: FeedEntry?
+    var selectedTableIndex: NSIndexPath?
     
     
     // MARK: Initialization
@@ -89,13 +94,21 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     @IBAction func unwindBySelectingCity(sender: UIStoryboardSegue) {
         if self.currentFeedEntry != nil {
             getRSSFeed(self.currentFeedEntry!.url)
+            self.currentWeatherEntryLabel.hidden = false
         }
     }
     
     @IBAction func updateToLocalWeather(sender: UIBarButtonItem) {
+        startLoadingGeolocation()
         self.locationManager.prepareForReverseGeolocationLookup()
     }
     
+    @IBAction func showDetails(sender: UIButton) {
+        if let cell = sender.superview?.superview as? WeatherEntryCell {
+            self.selectedTableIndex = self.weatherEntryTableView.indexPathForCell(cell)
+            performSegueWithIdentifier(MainViewController.DetailsViewSegueIdentifier, sender: sender)
+        }
+    }
     
     // MARK: Interface
     func getRSSFeed(url: NSURL) -> Bool {
@@ -110,9 +123,11 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     func updateWeatherEntryCell(cell: WeatherEntryCell, indexPath: NSIndexPath) {
         cell.titleTextView.text = self.parser.entriesList[indexPath.row].title
         cell.weatherEmojiLabel.text = extractWeatherConditionEmoji(cell, indexPath: indexPath)
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
     }
     
     func updateCurrentLocation() {
+        startLoadingGeolocation()
         self.locationManager.startUpdatingLocation()
     }
     
@@ -130,8 +145,12 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
                 callback(error: error)
                 return
             }
-            let dateText = self.getDateText()
-            self.dateTextView.text = self.locationManager.currentPlacemark!.locality! + " " + dateText
+            if let placemark = self.locationManager.currentPlacemark {
+                if let city = placemark.locality {
+                    let dateText = self.getDateText()
+                    self.dateTextView.text = city + " " + dateText
+                }
+            }
             callback(error: nil)
         })
     }
@@ -170,17 +189,13 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
     
     private func prepareDetailsViewController(segue: UIStoryboardSegue, sender: AnyObject?) {
         let controller = segue.destinationViewController as! DetailsViewController
-        if let selectedWeatherEntryCell = sender as? WeatherEntryCell {
-            let indexPath = self.weatherEntryTableView.indexPathForCell(selectedWeatherEntryCell)
-            let selectedWeatherEntry = self.parser.entriesList[indexPath!.row]
-            controller.summaryText = selectedWeatherEntry.summary
-        }
+        let selectedWeatherEntry = self.parser.entriesList[self.selectedTableIndex!.row]
+        controller.summaryText = selectedWeatherEntry.summary
     }
     
     private func updateView() {
         let weatherEntryList = self.parser.entriesList
         
-        // TODO: The entries list may be a different size after loading another feed entry
         for entryIndex in 0 ..< weatherEntryList.count {
             let entry = weatherEntryList[entryIndex]
             if let entryTitle = entry.title {
@@ -206,18 +221,44 @@ class MainViewController: UIViewController, UITableViewDataSource, UITableViewDe
         }
     }
     
+    private func startLoadingGeolocation() {
+        self.dateTextView.text = self.loadingGeolocationText
+        self.currentWeatherEntryLabel.hidden = true
+        self.geolocationActivityIndicator.hidden = false
+        self.geolocationActivityIndicator.startAnimating()
+    }
+    
+    private func weatherLocationNotSupported(city: String) {
+        self.dateTextView.text = city + self.locationNotSupportedText
+        self.currentWeatherEntryLabel.hidden = true
+    }
+    
     
     // MARK: Callbacks
+    private func doneLoadingGeolocation() {
+        self.currentWeatherEntryLabel.hidden = false
+        self.geolocationActivityIndicator.hidden = true
+        self.geolocationActivityIndicator.stopAnimating()
+    }
+    
     private func onLocationUpdate(error: NSError?) {
         if error != nil {
             print("CLLocationManagerDelegate didUpdateLocations error: " + error!.description)
             return
         }
-        print("Location updated to " + self.locationManager.currentPlacemark!.locality!)
-        self.currentFeedEntry = self.locationManager.extractFeedEntryFromGeolocation()
-        if let url = self.currentFeedEntry!.url {
-            getRSSFeed(url)
+        doneLoadingGeolocation()
+        if let placemark = self.locationManager.currentPlacemark {
+            if let city = placemark.locality {
+                print("Location updated to " + city)
+                self.currentFeedEntry = self.locationManager.extractFeedEntryFromGeolocation()
+                if let url = self.currentFeedEntry!.url {
+                    getRSSFeed(url)
+                    updateView()
+                    return
+                }
+                weatherLocationNotSupported(city)
+            }
         }
-        updateView()
+        self.currentWeatherEntryLabel.text = self.failToFetchLocationText
     }
 }
